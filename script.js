@@ -44,7 +44,8 @@ function getCurrentPageName() {
     'telugurhymes.html': 'telugu-rhymes',
     'hindirhymes.html': 'hindi-rhymes',
     'sanskrithymes.html': 'sanskrit-rhymes',
-    'birthday.html': 'birthday'
+    'birthday.html': 'birthday',
+    'with-us.html': 'with-us'
   };
 
   return pageMap[pageName] || 'home';

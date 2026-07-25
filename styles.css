@@ -202,6 +202,19 @@ body {
   padding: 0 16px;
 }
 
+.home-page-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.home-action-btn {
+  padding: 12px 18px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
 .nav-btn {
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
@@ -489,6 +502,132 @@ body {
 .telugu-text {
   font-family: 'Anek Telugu', "Noto Serif Telugu", "Tiro Telugu", "Segoe UI", sans-serif;
   line-height: 1.8;
+}
+
+.hindi-text {
+  font-family: "Noto Serif Devanagari", "Segoe UI", sans-serif;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.tamil-text {
+  font-family: "Noto Sans Tamil", "Noto Serif Tamil", "Segoe UI", sans-serif;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.kannada-text {
+  font-family: "Noto Sans Kannada", "Noto Serif Kannada", "Segoe UI", sans-serif;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.feature-section {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 36px;
+}
+
+.feature-card {
+  width: min(100%, 980px);
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+  border-radius: 32px;
+}
+
+.withus-card {
+  padding: 36px 28px;
+  text-align: center;
+}
+
+.withus-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  color: var(--accent);
+}
+
+.withus-date {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 1.02rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.withus-timer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 auto 22px;
+  max-width: 760px;
+}
+
+.withus-counter-card {
+  padding: 18px 14px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: inset 0 0 24px rgba(255,255,255,0.04);
+}
+
+.withus-label {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 8px;
+}
+
+.withus-value {
+  display: block;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 700;
+  color: var(--text);
+  text-shadow: 0 0 22px rgba(255, 231, 166, 0.18);
+}
+
+.withus-message {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.script-showcase {
+  padding: 28px;
+}
+
+.script-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.script-card {
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+}
+
+.script-label {
+  margin: 0 0 8px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.78rem;
+}
+
+.script-name {
+  font-size: clamp(1.15rem, 3.2vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
 }
 
 .rhyme-list {
@@ -1004,6 +1143,23 @@ body {
   .rhyme-item {
     padding: 12px 13px;
     font-size: 0.95rem;
+  }
+
+  .script-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .script-showcase {
+    padding: 18px 16px;
+  }
+
+  .script-card {
+    padding: 14px;
+  }
+
+  .script-name {
+    font-size: clamp(1rem, 5vw, 1.35rem);
   }
 
   .story-section {
