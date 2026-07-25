@@ -10,6 +10,8 @@
   --border: rgba(255, 255, 255, 0.16);
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;700&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -474,13 +476,19 @@ body {
 }
 
 .nameplate-script.telugu {
-  font-family: "Noto Serif Telugu", "Tiro Telugu", "Segoe UI", sans-serif;
+  font-family: 'Anek Telugu', "Noto Serif Telugu", "Tiro Telugu", "Segoe UI", sans-serif;
   text-shadow: 0 0 16px rgba(255, 231, 166, 0.24);
 }
 
 .nameplate-script.hindi,
 .nameplate-script.sanskrit {
   font-family: "Noto Serif Devanagari", "Segoe UI", sans-serif;
+}
+
+/* Utility class to apply Anek Telugu to blocks of Telugu text */
+.telugu-text {
+  font-family: 'Anek Telugu', "Noto Serif Telugu", "Tiro Telugu", "Segoe UI", sans-serif;
+  line-height: 1.8;
 }
 
 .rhyme-list {
