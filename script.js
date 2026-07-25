@@ -79,6 +79,9 @@ function bindNavigation() {
       const isHomeLockedWithUs = button.id === 'withUsNavBtn' && !isComplete && (window.location.pathname.split('/').pop() === 'index.html' || window.location.pathname === '/');
       if (isHomeLockedWithUs) {
         event.preventDefault();
+        if (choiceStatus) {
+          choiceStatus.textContent = 'The WithUs story opens once the name is revealed.';
+        }
         return;
       }
 
