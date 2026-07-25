@@ -5,9 +5,8 @@ const fullNameReveal = document.getElementById('fullNameReveal');
 const cursorGlow = document.getElementById('cursorGlow');
 const heroPanel = document.querySelector('.hero-panel');
 const sparkles = document.getElementById('sparkles');
-const choiceButtons = document.getElementById('choiceButtons');
 const choicePrompt = document.getElementById('choicePrompt');
-const choiceStatus = document.getElementById('choiceStatus');
+const revealButton = document.getElementById('revealButton');
 const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
 const birthDateInput = document.getElementById('birthDateInput');
 const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
@@ -28,6 +27,35 @@ const optionSets = [
 let stepIndex = 0;
 let isComplete = false;
 let fullNameRevealed = false;
+
+const revealStateKey = 'klintaraRevealState';
+
+function readRevealState() {
+  try {
+    const savedState = sessionStorage.getItem(revealStateKey);
+    if (!savedState) return null;
+    return JSON.parse(savedState);
+  } catch (error) {
+    return null;
+  }
+}
+
+function writeRevealState() {
+  sessionStorage.setItem(revealStateKey, JSON.stringify({
+    isComplete,
+    stepIndex,
+    fullNameRevealed
+  }));
+}
+
+function restoreRevealState() {
+  const savedState = readRevealState();
+  if (!savedState) return;
+
+  isComplete = Boolean(savedState.isComplete);
+  stepIndex = Number(savedState.stepIndex) || 0;
+  fullNameRevealed = Boolean(savedState.fullNameRevealed);
+}
 
 function getCurrentPageName() {
   const pageName = window.location.pathname.split('/').pop() || 'index.html';
@@ -160,71 +188,27 @@ function updateNameDisplay() {
   });
 }
 
-function renderChoices() {
-  if (!choiceButtons) return;
-
-  const [correctLetter, otherLetter] = optionSets[stepIndex];
-  const options = [correctLetter, otherLetter].sort(() => Math.random() - 0.5);
-
-  choiceButtons.innerHTML = '';
-
-  options.forEach((letter) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'option-btn';
-    button.innerHTML = `<span class="option-letter">${letter}</span><span class="option-label">${letter === correctLetter ? 'Reveal this light' : 'Try another path'}</span>`;
-    button.addEventListener('click', () => handleChoice(letter, letter === correctLetter, button));
-    choiceButtons.appendChild(button);
-  });
-
-
-  if (choiceStatus) {
-    choiceStatus.textContent = stepIndex === 0
-      ? 'The first spark is waiting.'
-      : `The name is glowing with ${stepIndex} letter${stepIndex === 1 ? '' : 's'}.`;
-  }
-}
-
-function handleChoice(selectedLetter, isCorrect, button) {
+function completeReveal() {
   if (isComplete) return;
 
-  if (!isCorrect) {
-    button.classList.add('shake');
-    setTimeout(() => button.classList.remove('shake'), 350);
-    if (choiceStatus) {
-      choiceStatus.textContent = 'That path is not the next light. Choose again.';
-    }
-    return;
-  }
-
-  if (choiceStatus) {
-    choiceStatus.textContent = 'The blessing has begun to shine..!';
-  }
-
-  stepIndex += 1;
+  isComplete = true;
+  stepIndex = nameLetters.length;
   updateNameDisplay();
 
-  if (stepIndex >= nameLetters.length) {
-    isComplete = true;
-    if (choicePrompt) {
-      choicePrompt.textContent = 'Lovely — That\'s incredibly unique!';
-    }
-    if (choiceButtons) {
-      choiceButtons.innerHTML = '';
-    }
-    storySection?.classList.remove('hidden');
-    storySection?.classList.add('visible');
-    updateWithUsButtonState();
-
-    // Trigger celebration after final reveal animation completes
-    setTimeout(() => {
-      startKlintaraCelebration();
-    }, 300);
-
-    return;
+  if (choicePrompt) {
+    choicePrompt.textContent = 'Lovely — That\'s incredibly unique!';
   }
+  if (revealButton) {
+    revealButton.style.display = 'none';
+  }
+  storySection?.classList.remove('hidden');
+  storySection?.classList.add('visible');
+  writeRevealState();
+  updateWithUsButtonState();
 
-  renderChoices();
+  setTimeout(() => {
+    startKlintaraCelebration();
+  }, 300);
 }
 
 function buildFullNameReveal() {
@@ -357,8 +341,24 @@ function resetPagePosition() {
 resetPagePosition();
 createSparkles();
 buildFullNameReveal();
+restoreRevealState();
 updateNameDisplay();
-renderChoices();
+
+if (isComplete) {
+  if (choicePrompt) {
+    choicePrompt.textContent = 'Lovely — That\'s incredibly unique!';
+  }
+  if (revealButton) {
+    revealButton.style.display = 'none';
+  }
+  storySection?.classList.remove('hidden');
+  storySection?.classList.add('visible');
+}
+
+revealButton?.addEventListener('click', () => {
+  if (isComplete) return;
+  completeReveal();
+});
 
 window.addEventListener('load', resetPagePosition);
 document.addEventListener('pointermove', updateCursorGlow, { passive: true });
