@@ -8,6 +8,10 @@ const sparkles = document.getElementById('sparkles');
 const choiceButtons = document.getElementById('choiceButtons');
 const choicePrompt = document.getElementById('choicePrompt');
 const choiceStatus = document.getElementById('choiceStatus');
+const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
+const birthDateInput = document.getElementById('birthDateInput');
+const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
+const birthdayResult = document.getElementById('birthdayResult');
 
 const nameLetters = ['K', 'L', 'I', 'N', 'T', 'A', 'R', 'A'];
 const optionSets = [
@@ -24,6 +28,77 @@ const optionSets = [
 let stepIndex = 0;
 let isComplete = false;
 let fullNameRevealed = false;
+
+function getCurrentPageName() {
+  const pageName = window.location.pathname.split('/').pop() || 'index.html';
+  if (pageName === '' || pageName === 'index.html') {
+    return 'home';
+  }
+
+  const pageMap = {
+    'index.html': 'home',
+    'telugu-rhymes.html': 'rhymes',
+    'hindi-rhymes.html': 'hindi-rhymes',
+    'sanskrit-rhymes.html': 'sanskrit-rhymes',
+    'nameplate.html': 'nameplate',
+    'telugurhymes.html': 'telugu-rhymes',
+    'hindirhymes.html': 'hindi-rhymes',
+    'sanskrithymes.html': 'sanskrit-rhymes',
+    'birthday.html': 'birthday'
+  };
+
+  return pageMap[pageName] || 'home';
+}
+
+function updateActiveNav() {
+  const currentSection = getCurrentPageName();
+
+  navButtons.forEach((button) => {
+    button.classList.toggle('active', button.dataset.target === currentSection);
+  });
+}
+
+function bindNavigation() {
+  navButtons.forEach((button) => {
+    const href = button.getAttribute('href');
+    if (!href || href.startsWith('#')) return;
+
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.location.href = href;
+    });
+  });
+}
+
+function calculateDaysSinceBirth() {
+  if (!birthDateInput || !birthdayResult) return;
+
+  const selectedDate = birthDateInput.value;
+  if (!selectedDate) {
+    birthdayResult.textContent = 'Please choose a birth date to begin the countdown.';
+    return;
+  }
+
+  const birth = new Date(`${selectedDate}T00:00:00`);
+  const today = new Date();
+  const normalizedBirth = new Date(birth.getFullYear(), birth.getMonth(), birth.getDate());
+  const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const diffMs = normalizedToday - normalizedBirth;
+
+  if (diffMs < 0) {
+    birthdayResult.textContent = 'That date is still ahead — choose a day that has already arrived.';
+    return;
+  }
+
+  const diffDays = Math.floor(diffMs / 86400000);
+  const formattedDate = new Date(`${selectedDate}T00:00:00`).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  birthdayResult.textContent = `✨ ${diffDays} days of joy and love since ${formattedDate}.`;
+}
 
 function createSparkles() {
   if (!sparkles) return;
@@ -269,4 +344,11 @@ document.addEventListener('pointerleave', () => {
     heroPanel.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
   }
 });
+updateActiveNav();
+bindNavigation();
+
+calculateBirthdayBtn?.addEventListener('click', calculateDaysSinceBirth);
+birthDateInput?.addEventListener('change', calculateDaysSinceBirth);
+calculateDaysSinceBirth();
+
 document.addEventListener('scroll', handleScroll, { passive: true });
