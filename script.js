@@ -59,12 +59,29 @@ function updateActiveNav() {
   });
 }
 
+function updateWithUsButtonState() {
+  const withUsButton = document.getElementById('withUsNavBtn');
+  if (!withUsButton) return;
+
+  const isHomePage = window.location.pathname.split('/').pop() === 'index.html' || window.location.pathname === '/';
+  const shouldLock = isHomePage && !isComplete;
+
+  withUsButton.classList.toggle('locked', shouldLock);
+  withUsButton.setAttribute('aria-disabled', shouldLock ? 'true' : 'false');
+}
+
 function bindNavigation() {
   navButtons.forEach((button) => {
     const href = button.getAttribute('href');
     if (!href || href.startsWith('#')) return;
 
     button.addEventListener('click', (event) => {
+      const isHomeLockedWithUs = button.id === 'withUsNavBtn' && !isComplete && (window.location.pathname.split('/').pop() === 'index.html' || window.location.pathname === '/');
+      if (isHomeLockedWithUs) {
+        event.preventDefault();
+        return;
+      }
+
       event.preventDefault();
       window.location.href = href;
     });
@@ -193,6 +210,7 @@ function handleChoice(selectedLetter, isCorrect, button) {
     }
     storySection?.classList.remove('hidden');
     storySection?.classList.add('visible');
+    updateWithUsButtonState();
 
     // Trigger celebration after final reveal animation completes
     setTimeout(() => {
@@ -346,6 +364,7 @@ document.addEventListener('pointerleave', () => {
   }
 });
 updateActiveNav();
+updateWithUsButtonState();
 bindNavigation();
 
 calculateBirthdayBtn?.addEventListener('click', calculateDaysSinceBirth);
