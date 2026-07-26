@@ -156,6 +156,33 @@ function calculateDaysSinceBirth() {
   birthdayResult.textContent = `✨ ${diffDays} days of joy and love since ${formattedDate}.`;
 }
 
+function createBurst(x, y) {
+  const burst = document.createElement('span');
+  burst.className = 'button-burst';
+  burst.style.left = `${x}px`;
+  burst.style.top = `${y}px`;
+
+  const particleCount = 6;
+  for (let i = 0; i < particleCount; i += 1) {
+    const particle = document.createElement('span');
+    particle.className = 'button-burst-particle';
+    const angle = (Math.PI * 2 * i) / particleCount;
+    const distance = 10 + Math.random() * 12;
+    particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+    particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+    particle.style.setProperty('--delay', `${Math.random() * 0.08}s`);
+    burst.appendChild(particle);
+  }
+
+  document.body.appendChild(burst);
+  setTimeout(() => burst.remove(), 420);
+}
+
+function triggerButtonBurst(event) {
+  if (!event || !event.clientX || !event.clientY) return;
+  createBurst(event.clientX, event.clientY);
+}
+
 function createSparkles() {
   if (!sparkles) return;
 
@@ -389,9 +416,19 @@ if (isComplete) {
   storySection?.classList.add('visible');
 }
 
-revealButton?.addEventListener('click', () => {
+revealButton?.addEventListener('click', (event) => {
   if (isComplete) return;
+  triggerButtonBurst(event);
   completeReveal();
+});
+
+[revealButton, homeScrollButton, ...navButtons].forEach((button) => {
+  if (!button) return;
+  button.addEventListener('click', (event) => {
+    if (event.detail > 0) {
+      triggerButtonBurst(event);
+    }
+  });
 });
 
 window.addEventListener('load', resetPagePosition);

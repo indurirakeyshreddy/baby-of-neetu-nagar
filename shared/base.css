@@ -8,6 +8,12 @@
   --accent-2: #b8c7ff;
   --accent-3: #8feeff;
   --border: rgba(255, 255, 255, 0.16);
+  --surface: rgba(255, 255, 255, 0.08);
+  --surface-strong: rgba(255, 255, 255, 0.14);
+  --bg-gradient: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.14), transparent 22%),
+    radial-gradient(circle at 80% 15%, rgba(184, 199, 255, 0.18), transparent 26%),
+    radial-gradient(circle at 50% 110%, rgba(143, 238, 255, 0.16), transparent 32%),
+    linear-gradient(180deg, #091220 0%, #050816 55%, #060a14 100%);
 }
 
 * {
@@ -29,11 +35,7 @@ body {
   text-rendering: optimizeLegibility;
   overscroll-behavior-y: none;
   touch-action: manipulation;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.14), transparent 22%),
-    radial-gradient(circle at 80% 15%, rgba(184, 199, 255, 0.18), transparent 26%),
-    radial-gradient(circle at 50% 110%, rgba(143, 238, 255, 0.16), transparent 32%),
-    linear-gradient(180deg, #091220 0%, #050816 55%, #060a14 100%);
+  background: var(--bg-gradient);
   overflow-x: hidden;
 }
 
@@ -105,6 +107,7 @@ body {
   z-index: 20;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 10px;
   max-width: 1180px;
@@ -113,10 +116,10 @@ body {
 }
 
 .nav-btn {
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--border);
   border-radius: 999px;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--surface);
   color: var(--text);
   cursor: pointer;
   text-decoration: none;
@@ -129,8 +132,8 @@ body {
 .nav-btn:hover,
 .nav-btn.active {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.32);
-  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--border);
+  background: var(--surface-strong);
 }
 
 .nav-btn[aria-disabled="true"] {
@@ -148,7 +151,7 @@ body {
   transform: translateX(-50%) translateY(4px);
   padding: 8px 10px;
   border-radius: 999px;
-  background: rgba(10, 16, 33, 0.95);
+  background: var(--panel);
   color: var(--accent);
   font-size: 0.74rem;
   letter-spacing: 0.08em;
@@ -172,6 +175,39 @@ body {
   z-index: 1;
   padding: 18px 24px 24px;
   will-change: transform;
+}
+
+.button-burst {
+  position: fixed;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 80;
+}
+
+.button-burst-particle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  opacity: 0;
+  animation: burstParticle 0.42s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+  transform: translate(-50%, -50%);
+}
+
+@keyframes burstParticle {
+  0% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(0.18);
+  }
 }
 
 @keyframes drift {
@@ -207,6 +243,11 @@ body {
   .page-shell {
     padding: 12px;
     will-change: auto;
+  }
+
+  .theme-toggle {
+    padding: 7px 10px;
+    font-size: 0.9rem;
   }
 
   .aurora,
