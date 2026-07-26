@@ -97,7 +97,7 @@ function updateWithUsButtonState() {
 
   withUsButton.classList.toggle('locked', shouldLock);
   withUsButton.setAttribute('aria-disabled', shouldLock ? 'true' : 'false');
-  withUsButton.setAttribute('href', shouldLock ? '#' : 'withus/with-us.html');
+  withUsButton.setAttribute('href', shouldLock ? '#' : '../withus/with-us.html');
 }
 
 function bindNavigation() {
