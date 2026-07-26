@@ -61,8 +61,8 @@
 
 .feature-card {
   width: min(100%, 980px);
-  border: 1px solid var(--border);
-  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(135deg, rgba(10, 16, 33, 0.9), rgba(8, 13, 26, 0.86));
   backdrop-filter: blur(20px);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
   border-radius: 32px;
@@ -122,8 +122,8 @@
 .rhyme-item {
   padding: 14px 16px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
   color: var(--muted);
   line-height: 1.7;
 }
