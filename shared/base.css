@@ -37,6 +37,27 @@ body {
   touch-action: manipulation;
   background: var(--bg-gradient);
   overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255,255,255,0.08), transparent 35%, rgba(143,238,255,0.08) 100%);
+  mix-blend-mode: screen;
+  opacity: 0.75;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 0%, transparent 45%, rgba(2, 6, 16, 0.34) 100%);
+  z-index: 0;
 }
 
 .background-layer {
@@ -44,6 +65,25 @@ body {
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+  z-index: 0;
+}
+
+.background-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 95%);
+  opacity: 0.28;
+}
+
+.background-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(255,255,255,0.14), transparent 30%);
+  opacity: 0.35;
 }
 
 .aurora {
@@ -112,7 +152,7 @@ body {
   gap: 10px;
   max-width: 1180px;
   margin: 16px auto 0;
-  padding: 0 16px;
+  padding: 0 16px 8px;
 }
 
 .nav-btn {
@@ -124,7 +164,8 @@ body {
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
-  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 180ms ease, background 180ms ease;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
   backdrop-filter: blur(12px);
   -webkit-tap-highlight-color: transparent;
 }
@@ -134,6 +175,7 @@ body {
   transform: translateY(-2px);
   border-color: var(--border);
   background: var(--surface-strong);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
 }
 
 .nav-btn[aria-disabled="true"] {
