@@ -7,6 +7,8 @@ const heroPanel = document.querySelector('.hero-panel');
 const sparkles = document.getElementById('sparkles');
 const choicePrompt = document.getElementById('choicePrompt');
 const revealButton = document.getElementById('revealButton');
+const audioToggleBtn = document.getElementById('audioToggleBtn');
+const revealAudio = document.getElementById('revealAudio');
 const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
 const birthDateInput = document.getElementById('birthDateInput');
 const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
@@ -29,6 +31,7 @@ const optionSets = [
 let stepIndex = 0;
 let isComplete = false;
 let fullNameRevealed = false;
+let revealAudioStarted = false;
 
 const revealStateKey = 'klintaraRevealState';
 
@@ -221,6 +224,37 @@ function updateNameDisplay() {
   });
 }
 
+function updateAudioToggleState() {
+  if (!audioToggleBtn) return;
+
+  const isMuted = revealAudio ? revealAudio.muted : true;
+  audioToggleBtn.classList.toggle('muted', isMuted);
+  audioToggleBtn.setAttribute('aria-pressed', String(isMuted));
+  audioToggleBtn.setAttribute('aria-label', isMuted ? 'Unmute audio' : 'Mute audio');
+  audioToggleBtn.textContent = isMuted ? '🔈' : '🔊';
+}
+
+function startRevealAudio() {
+  if (!revealAudio || revealAudioStarted) return;
+
+  revealAudio.currentTime = 0;
+  revealAudio.loop = true;
+  revealAudio.volume = 1;
+  revealAudioStarted = true;
+
+  if (revealAudio.muted) {
+    updateAudioToggleState();
+    return;
+  }
+
+  const playPromise = revealAudio.play();
+  if (playPromise && typeof playPromise.then === 'function') {
+    playPromise.catch(() => {
+      revealAudioStarted = false;
+    });
+  }
+}
+
 function completeReveal() {
   if (isComplete) return;
 
@@ -238,6 +272,7 @@ function completeReveal() {
   storySection?.classList.add('visible');
   writeRevealState();
   updateWithUsButtonState();
+  startRevealAudio();
 
   setTimeout(() => {
     startKlintaraCelebration();
@@ -403,6 +438,7 @@ resetPagePosition();
 createSparkles();
 buildFullNameReveal();
 restoreRevealState();
+updateAudioToggleState();
 updateNameDisplay();
 
 if (isComplete) {
@@ -420,6 +456,20 @@ revealButton?.addEventListener('click', (event) => {
   if (isComplete) return;
   triggerButtonBurst(event);
   completeReveal();
+});
+
+audioToggleBtn?.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (!revealAudio) return;
+
+  revealAudio.muted = !revealAudio.muted;
+  updateAudioToggleState();
+
+  if (!revealAudio.muted && isComplete) {
+    startRevealAudio();
+  } else if (revealAudio.muted) {
+    revealAudio.pause();
+  }
 });
 
 [revealButton, homeScrollButton, ...navButtons].forEach((button) => {

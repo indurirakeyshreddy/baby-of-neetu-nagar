@@ -40,6 +40,7 @@
 
     <section class="hero" id="home">
       <div class="hero-panel">
+        <button class="audio-toggle" id="audioToggleBtn" type="button" aria-label="Mute audio" aria-pressed="false">🔊</button>
 
         <p class="eyebrow">
           A family blessing
@@ -63,8 +64,12 @@
 
         <div class="choice-panel">
           <p class="choice-prompt" id="choicePrompt">The name is waiting to be revealed.</p>
-          <button class="reveal-btn" id="revealButton" type="button">Reveal</button>
+          <div class="choice-row">
+            <button class="reveal-btn" id="revealButton" type="button">Reveal</button>
+          </div>
         </div>
+
+        <audio id="revealAudio" src="audio/Klintara-Audio.mp3" preload="auto" loop></audio>
 
       </div>
     </section>
