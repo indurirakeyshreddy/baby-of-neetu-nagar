@@ -1,0 +1,58 @@
+.withus-card {
+  padding: 36px 28px;
+  text-align: center;
+}
+
+.withus-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  color: var(--accent);
+}
+
+.withus-date {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 1.02rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.withus-timer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 auto 22px;
+  max-width: 760px;
+}
+
+.withus-counter-card {
+  padding: 18px 14px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: inset 0 0 24px rgba(255,255,255,0.04);
+}
+
+.withus-label {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 8px;
+}
+
+.withus-value {
+  display: block;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 700;
+  color: var(--text);
+  text-shadow: 0 0 22px rgba(255, 231, 166, 0.18);
+}
+
+.withus-message {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}

@@ -1,0 +1,95 @@
+:root {
+  --rhymes-surface: rgba(255, 255, 255, 0.06);
+  --rhymes-border: rgba(255, 255, 255, 0.12);
+}
+
+.feature-section {
+  max-width: 1080px;
+  margin: 0 auto 24px;
+  padding: 0 0 12px;
+}
+
+.table-of-contents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 18px;
+}
+
+.table-of-contents a {
+  text-decoration: none;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.table-of-contents a:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.feature-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px 26px;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28);
+}
+
+.section-eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  font-size: 0.78rem;
+}
+
+.feature-card h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-size: 1.28rem;
+}
+
+.feature-section {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 36px;
+}
+
+.feature-card {
+  width: min(100%, 980px);
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+  border-radius: 32px;
+}
+
+.telugu-text {
+  font-family: 'Anek Telugu', "Noto Serif Telugu", "Tiro Telugu", "Segoe UI", sans-serif;
+  line-height: 1.8;
+}
+
+.hindi-text {
+  font-family: "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", "Segoe UI", sans-serif;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.rhyme-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.rhyme-item {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  line-height: 1.7;
+}

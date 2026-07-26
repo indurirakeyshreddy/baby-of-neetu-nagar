@@ -73,7 +73,8 @@ function getCurrentPageName() {
     'hindirhymes.html': 'hindi-rhymes',
     'sanskrithymes.html': 'sanskrit-rhymes',
     'birthday.html': 'birthday',
-    'with-us.html': 'with-us'
+    'with-us.html': 'with-us',
+    'with-us': 'with-us'
   };
 
   return pageMap[pageName] || 'home';
@@ -96,7 +97,7 @@ function updateWithUsButtonState() {
 
   withUsButton.classList.toggle('locked', shouldLock);
   withUsButton.setAttribute('aria-disabled', shouldLock ? 'true' : 'false');
-  withUsButton.setAttribute('href', shouldLock ? '#' : 'with-us.html');
+  withUsButton.setAttribute('href', shouldLock ? '#' : 'withus/with-us.html');
 }
 
 function bindNavigation() {
