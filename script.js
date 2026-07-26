@@ -258,10 +258,24 @@ function startRevealAudio() {
 function completeReveal() {
   if (isComplete) return;
 
+  // Smooth staggered reveal: clear previous classes, force layout, then add
+  // the 'revealed' class to each letter with a short stagger for a clean
+  // cascading animation that feels smooth across devices.
   isComplete = true;
-  stepIndex = nameLetters.length;
-  updateNameDisplay();
 
+  const letterSpans = Array.from(nameDisplay?.querySelectorAll('span') || []);
+  letterSpans.forEach((s) => s.classList.remove('revealed'));
+
+  // Force a layout/reflow so the animations start from the initial state
+  void nameDisplay?.offsetWidth;
+
+  const staggerMs = 60; // ms between letter reveals
+  letterSpans.forEach((span, i) => {
+    window.setTimeout(() => span.classList.add('revealed'), i * staggerMs);
+  });
+
+  // Update internal state and show content
+  stepIndex = nameLetters.length;
   if (choicePrompt) {
     choicePrompt.textContent = 'Lovely — That\'s incredibly unique!';
   }
