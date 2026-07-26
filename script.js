@@ -218,10 +218,23 @@ function createSparkles() {
 }
 
 function updateNameDisplay() {
-  const letterSpans = Array.from(nameDisplay?.querySelectorAll('span') || []);
-  letterSpans.forEach((span, index) => {
-    span.classList.toggle('revealed', index < stepIndex);
-  });
+  if (!nameDisplay) return;
+
+  const letterSpans = Array.from(nameDisplay.querySelectorAll('span') || []);
+
+  // If the reveal is complete, make the whole container revealed (fast, low-cost)
+  // so the name stays visible after refresh. Otherwise, keep per-letter state
+  // in case partial progress is used elsewhere.
+  if (isComplete || stepIndex >= nameLetters.length) {
+    nameDisplay.classList.add('revealed');
+    // ensure no leftover per-letter classes
+    letterSpans.forEach((span) => span.classList.remove('revealed'));
+  } else {
+    nameDisplay.classList.remove('revealed');
+    letterSpans.forEach((span, index) => {
+      span.classList.toggle('revealed', index < stepIndex);
+    });
+  }
 }
 
 function updateAudioToggleState() {
@@ -264,15 +277,12 @@ function completeReveal() {
   isComplete = true;
 
   const letterSpans = Array.from(nameDisplay?.querySelectorAll('span') || []);
+  // Clear any previous per-letter classes and perform a single container reveal.
   letterSpans.forEach((s) => s.classList.remove('revealed'));
 
-  // Force a layout/reflow so the animations start from the initial state
+  // Force layout, then reveal the container — CSS handles a single smooth transition.
   void nameDisplay?.offsetWidth;
-
-  const staggerMs = 60; // ms between letter reveals
-  letterSpans.forEach((span, i) => {
-    window.setTimeout(() => span.classList.add('revealed'), i * staggerMs);
-  });
+  nameDisplay?.classList.add('revealed');
 
   // Update internal state and show content
   stepIndex = nameLetters.length;
