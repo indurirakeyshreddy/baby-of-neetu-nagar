@@ -22,7 +22,7 @@ function getTimeParts() {
   return { years, months, days };
 }
 
-function animateCounter(element, targetValue, duration = 1200) {
+function animateCounter(element, targetValue, duration = 1400) {
   if (!element) return;
 
   const startValue = Number(element.textContent.replace(/\D/g, '')) || 0;

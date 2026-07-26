@@ -12,6 +12,7 @@ const birthDateInput = document.getElementById('birthDateInput');
 const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
 const birthdayResult = document.getElementById('birthdayResult');
 const rhymeScrollButton = document.getElementById('rhymeScrollTop');
+const homeScrollButton = document.getElementById('homeScrollTop');
 
 const nameLetters = ['K', 'L', 'I', 'N', 'T', 'A', 'R', 'A'];
 const optionSets = [
@@ -336,14 +337,24 @@ function updateCursorGlow(event) {
   }
 }
 
-function toggleRhymeScrollButton() {
-  if (!rhymeScrollButton) return;
+function toggleScrollTopButtons() {
   const shouldShow = window.scrollY > 280;
-  rhymeScrollButton.classList.toggle('visible', shouldShow);
+
+  if (rhymeScrollButton) {
+    rhymeScrollButton.classList.toggle('visible', shouldShow);
+  }
+
+  if (homeScrollButton) {
+    homeScrollButton.classList.toggle('visible', shouldShow);
+  }
+}
+
+function scrollToPageTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function scrollToRhymeContents() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  scrollToPageTop();
 
   const toc = document.querySelector('.table-of-contents');
   const firstLink = toc?.querySelector('a');
@@ -395,8 +406,9 @@ updateWithUsButtonState();
 bindNavigation();
 
 rhymeScrollButton?.addEventListener('click', scrollToRhymeContents);
-window.addEventListener('scroll', toggleRhymeScrollButton, { passive: true });
-toggleRhymeScrollButton();
+homeScrollButton?.addEventListener('click', scrollToPageTop);
+window.addEventListener('scroll', toggleScrollTopButtons, { passive: true });
+toggleScrollTopButtons();
 
 calculateBirthdayBtn?.addEventListener('click', calculateDaysSinceBirth);
 birthDateInput?.addEventListener('change', calculateDaysSinceBirth);

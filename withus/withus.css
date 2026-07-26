@@ -1,6 +1,10 @@
 .withus-card {
   padding: 36px 28px;
   text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--panel);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28);
 }
 
 .withus-title {
@@ -35,7 +39,7 @@
 }
 
 .withus-counter-card.is-animating {
-  animation: withusCardPulse 1.2s ease-in-out;
+  animation: none;
 }
 
 .withus-label {
@@ -62,15 +66,3 @@
   line-height: 1.8;
 }
 
-@keyframes withusCardPulse {
-  0%, 100% {
-    transform: translateY(0);
-    box-shadow: inset 0 0 24px rgba(255,255,255,0.04);
-    border-color: rgba(255,255,255,0.16);
-  }
-  50% {
-    transform: translateY(-4px);
-    box-shadow: inset 0 0 24px rgba(255,255,255,0.12);
-    border-color: rgba(255, 231, 166, 0.34);
-  }
-}
