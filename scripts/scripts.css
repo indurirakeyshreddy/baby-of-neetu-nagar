@@ -1,0 +1,37 @@
+.script-showcase {
+  padding: 28px;
+}
+
+.script-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.script-card {
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+}
+
+.script-label {
+  margin: 0 0 8px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.78rem;
+}
+
+.script-name {
+  font-size: clamp(1.15rem, 3.2vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.sanskrit-text {
+  font-family: "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", "Segoe UI", sans-serif;
+}
