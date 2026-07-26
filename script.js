@@ -95,10 +95,13 @@ function updateWithUsButtonState() {
 
   const isHomePage = window.location.pathname.split('/').pop() === 'index.html' || window.location.pathname === '/';
   const shouldLock = isHomePage && !isComplete;
+  const currentPath = window.location.pathname;
+  const isInSubfolder = currentPath.includes('/rhymes/') || currentPath.includes('/scripts/') || currentPath.includes('/withus/');
+  const withUsHref = isInSubfolder ? '../withus/with-us.html' : 'withus/with-us.html';
 
   withUsButton.classList.toggle('locked', shouldLock);
   withUsButton.setAttribute('aria-disabled', shouldLock ? 'true' : 'false');
-  withUsButton.setAttribute('href', shouldLock ? '#' : '../withus/with-us.html');
+  withUsButton.setAttribute('href', shouldLock ? '#' : withUsHref);
 }
 
 function bindNavigation() {
@@ -110,8 +113,8 @@ function bindNavigation() {
       const isHomeLockedWithUs = button.id === 'withUsNavBtn' && !isComplete && (window.location.pathname.split('/').pop() === 'index.html' || window.location.pathname === '/');
       if (isHomeLockedWithUs) {
         event.preventDefault();
-        if (choiceStatus) {
-          choiceStatus.textContent = 'The WithUs story opens once the name is revealed.';
+        if (choicePrompt) {
+          choicePrompt.textContent = 'The WithUs story opens once the name is revealed.';
         }
         return;
       }
