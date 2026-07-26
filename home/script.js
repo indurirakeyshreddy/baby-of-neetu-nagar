@@ -11,6 +11,7 @@ const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
 const birthDateInput = document.getElementById('birthDateInput');
 const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
 const birthdayResult = document.getElementById('birthdayResult');
+const rhymeScrollButton = document.getElementById('rhymeScrollTop');
 
 const nameLetters = ['K', 'L', 'I', 'N', 'T', 'A', 'R', 'A'];
 const optionSets = [
@@ -332,6 +333,24 @@ function updateCursorGlow(event) {
   }
 }
 
+function toggleRhymeScrollButton() {
+  if (!rhymeScrollButton) return;
+  const shouldShow = window.scrollY > 280;
+  rhymeScrollButton.classList.toggle('visible', shouldShow);
+}
+
+function scrollToRhymeContents() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const toc = document.querySelector('.table-of-contents');
+  const firstLink = toc?.querySelector('a');
+  if (firstLink) {
+    setTimeout(() => {
+      firstLink.focus({ preventScroll: true });
+    }, 300);
+  }
+}
+
 function resetPagePosition() {
   if ('scrollRestoration' in window.history) {
     window.history.scrollRestoration = 'manual';
@@ -371,6 +390,10 @@ document.addEventListener('pointerleave', () => {
 updateActiveNav();
 updateWithUsButtonState();
 bindNavigation();
+
+rhymeScrollButton?.addEventListener('click', scrollToRhymeContents);
+window.addEventListener('scroll', toggleRhymeScrollButton, { passive: true });
+toggleRhymeScrollButton();
 
 calculateBirthdayBtn?.addEventListener('click', calculateDaysSinceBirth);
 birthDateInput?.addEventListener('change', calculateDaysSinceBirth);
