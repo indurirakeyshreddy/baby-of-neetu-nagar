@@ -113,10 +113,9 @@ function showMilestoneCelebration(parts = {}) {
   celebrationContainer.appendChild(celebration);
 
   const balloonCount = 16;
-  const launchGap = 380;
-  const duration = 11200;
-  const fadeDelay = Math.max(0, duration + launchGap * balloonCount - 1200);
-
+    const launchGap = 320;
+    const duration = 7600;
+    const fadeDelay = Math.max(0, duration + launchGap * balloonCount - 900);
   const launchSequence = () => {
     for (let i = 0; i < balloonCount; i += 1) {
       const entry = balloonPalette[i % balloonPalette.length];
@@ -132,7 +131,7 @@ function showMilestoneCelebration(parts = {}) {
       balloon.style.setProperty('--float-amplitude', `${16 + (i % 4) * 6}px`);
       balloon.style.setProperty('--drift', `${[-90, -56, -24, 20, 56, 92][i % 6]}px`);
       balloon.style.setProperty('--path-x', `${(Math.random() - 0.5) * 96}px`);
-      balloon.style.animation = `${animationName} ${duration}ms ease-in-out ${delay}ms forwards`;
+      balloon.style.animation = `${animationName} ${duration}ms linear ${delay}ms forwards`;
 
       const sphere = document.createElement('div');
       sphere.className = 'balloon-sphere';
@@ -203,47 +202,24 @@ function updateWithUsClock() {
   }
 
   if (!initialCounterAnimationComplete) {
-    if (!initialAnimationTimer) {
-      initialAnimationTimer = window.setTimeout(() => {
-        initialCounterAnimationComplete = true;
-        initialAnimationTimer = null;
-        if (shouldShowMilestoneCelebration(parts)) {
-          showMilestoneCelebration(parts);
-        }
-      }, 1600);
+    initialCounterAnimationComplete = true;
+    if (shouldShowMilestoneCelebration(parts)) {
+      showMilestoneCelebration(parts);
     }
   } else if (shouldShowMilestoneCelebration(parts)) {
     showMilestoneCelebration(parts);
   }
 }
 
-window.setTimeout(() => {
-  const milestoneCount = Math.max(1, getCompletedMonthMilestone());
-  if (!milestoneCelebrationShown && shouldShowMilestoneCelebration({ years: 0, months: milestoneCount, days: 0 })) {
-    showMilestoneCelebration({ years: 0, months: milestoneCount, days: 0 });
-  }
-}, 1400);
 
 window.showMilestoneCelebration = showMilestoneCelebration;
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     updateWithUsClock();
-    window.setTimeout(() => {
-      const milestoneCount = Math.max(1, getCompletedMonthMilestone());
-      if (!milestoneCelebrationShown && shouldShowMilestoneCelebration({ years: 0, months: milestoneCount, days: 0 })) {
-        showMilestoneCelebration({ years: 0, months: milestoneCount, days: 0 });
-      }
-    }, 1200);
   });
 } else {
   updateWithUsClock();
-  window.setTimeout(() => {
-    const milestoneCount = Math.max(1, getCompletedMonthMilestone());
-    if (!milestoneCelebrationShown && shouldShowMilestoneCelebration({ years: 0, months: milestoneCount, days: 0 })) {
-      showMilestoneCelebration({ years: 0, months: milestoneCount, days: 0 });
-    }
-  }, 1200);
 }
 
 setInterval(updateWithUsClock, 1000);
