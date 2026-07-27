@@ -129,6 +129,43 @@ function bindNavigation() {
   });
 }
 
+function getDistinctRhymeWords() {
+  const rhymeItems = Array.from(document.querySelectorAll('.rhyme-item'));
+  if (!rhymeItems.length) return 0;
+
+  const allText = rhymeItems.map((item) => item.textContent).join(' ');
+  const words = allText.match(/\p{L}+/gu) || [];
+  const normalized = words.map((word) => word.toLowerCase());
+  return new Set(normalized).size;
+}
+
+function showDistinctRhymeWordCount() {
+  const pageName = getCurrentPageName();
+  const labels = {
+    'rhymes': 'Telugu Rhymes',
+    'hindi-rhymes': 'Hindi Rhymes',
+    'sanskrit-rhymes': 'Sanskrit Rhymes'
+  };
+
+  const label = labels[pageName];
+  if (!label) return;
+
+  const count = getDistinctRhymeWords();
+  const counter = document.createElement('div');
+  counter.className = 'rhyme-word-count';
+  counter.textContent = `Distinct Vocabulary Count in ${label} = ${count}`;
+
+  const toc = document.querySelector('.table-of-contents');
+  if (toc?.parentNode) {
+    toc.parentNode.insertBefore(counter, toc);
+  } else {
+    const pageWrapper = document.querySelector('.feature-card') || document.querySelector('main');
+    if (pageWrapper) {
+      pageWrapper.prepend(counter);
+    }
+  }
+}
+
 function calculateDaysSinceBirth() {
   if (!birthDateInput || !birthdayResult) return;
 
@@ -515,6 +552,7 @@ document.addEventListener('pointerleave', () => {
 updateActiveNav();
 updateWithUsButtonState();
 bindNavigation();
+showDistinctRhymeWordCount();
 
 rhymeScrollButton?.addEventListener('click', scrollToRhymeContents);
 homeScrollButton?.addEventListener('click', scrollToPageTop);
