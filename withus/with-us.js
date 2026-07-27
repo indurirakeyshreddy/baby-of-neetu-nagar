@@ -169,12 +169,13 @@ function animateCounter(element, targetValue, duration = 1400) {
   const startValue = Number(element.textContent.replace(/\D/g, '')) || 0;
   const range = targetValue - startValue;
   const startTime = performance.now();
+  const minDigits = element.id === 'yearsValue' ? 3 : 2;
 
   function frame(currentTime) {
     const progress = Math.min((currentTime - startTime) / duration, 1);
     const eased = 1 - Math.pow(1 - progress, 3);
     const currentValue = Math.round(startValue + range * eased);
-    element.textContent = String(currentValue).padStart(2, '0');
+    element.textContent = String(currentValue).padStart(minDigits, '0');
 
     if (progress < 1) {
       requestAnimationFrame(frame);
@@ -198,7 +199,16 @@ function updateWithUsClock() {
   }
 
   if (withUsMessage) {
-    withUsMessage.textContent = `Living in love, light, and laughter for ${parts.years} years, ${parts.months} months, and ${parts.days} days.`;
+    const yearText = parts.years > 0 ? `${parts.years} ${parts.years === 1 ? 'year' : 'years'}` : '';
+    const monthText = parts.months > 0 ? `${parts.months} ${parts.months === 1 ? 'month' : 'months'}` : '';
+    const dayText = parts.days > 0 ? `${parts.days} ${parts.days === 1 ? 'day' : 'days'}` : '';
+
+    const segments = [yearText, monthText, dayText].filter(Boolean);
+    const summary = segments.length > 0
+      ? `Living in love, light, and laughter for ${segments.join(', ')}`
+      : 'Living in love, light, and laughter with us now';
+
+    withUsMessage.textContent = summary;
   }
 
   if (!initialCounterAnimationComplete) {
