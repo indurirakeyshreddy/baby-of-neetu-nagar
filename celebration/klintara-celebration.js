@@ -79,9 +79,11 @@ const KlintaraCelebration = (() => {
     const shape = getRandomElement(CONFIG.balloonShapes);
     balloon.classList.add(`balloon-shape-${shape}`);
 
-    // Random horizontal position
+    // Random horizontal position and subtle path offset so balloons do not travel in a rigid line
     const positionPercent = getRandomNumber(5, 95);
+    const pathOffset = getRandomNumber(-48, 48);
     balloon.style.left = `${positionPercent}%`;
+    balloon.style.setProperty('--path-x', `${pathOffset}px`);
 
     // Create balloon sphere
     const sphere = document.createElement('div');
