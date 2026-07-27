@@ -153,7 +153,7 @@ function showDistinctRhymeWordCount() {
   const count = getDistinctRhymeWords();
   const counter = document.createElement('div');
   counter.className = 'rhyme-word-count';
-  counter.textContent = `Distinct Vocabulary Count in ${label} = ${count}`;
+  counter.textContent = `Vocabulary Count = ${count}`;
 
   const toc = document.querySelector('.table-of-contents');
   if (toc?.parentNode) {
