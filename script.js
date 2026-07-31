@@ -280,20 +280,23 @@ function updateNameDisplay() {
 function updateAudioToggleState() {
   if (!audioToggleBtn) return;
 
-  const isMuted = revealAudio ? revealAudio.muted : true;
-  audioToggleBtn.classList.toggle('muted', isMuted);
-  audioToggleBtn.setAttribute('aria-pressed', String(isMuted));
-  audioToggleBtn.setAttribute('aria-label', isMuted ? 'Unmute audio' : 'Mute audio');
-  audioToggleBtn.textContent = isMuted ? '🔈' : '🔊';
+  const shouldShowMuted = revealAudio ? (revealAudio.muted || revealAudio.paused || !revealAudioStarted) : true;
+  audioToggleBtn.classList.toggle('muted', shouldShowMuted);
+  audioToggleBtn.setAttribute('aria-pressed', String(shouldShowMuted));
+  audioToggleBtn.setAttribute('aria-label', shouldShowMuted ? 'Unmute audio' : 'Mute audio');
+  audioToggleBtn.textContent = shouldShowMuted ? '🔈' : '🔊';
 }
 
 function startRevealAudio() {
-  if (!revealAudio || revealAudioStarted) return;
+  if (!revealAudio) return;
 
-  revealAudio.currentTime = 0;
+  if (!revealAudioStarted) {
+    revealAudio.currentTime = 0;
+    revealAudioStarted = true;
+  }
+
   revealAudio.loop = true;
   revealAudio.volume = 1;
-  revealAudioStarted = true;
 
   if (revealAudio.muted) {
     updateAudioToggleState();
@@ -304,6 +307,7 @@ function startRevealAudio() {
   if (playPromise && typeof playPromise.then === 'function') {
     playPromise.catch(() => {
       revealAudioStarted = false;
+      updateAudioToggleState();
     });
   }
 }
@@ -544,15 +548,25 @@ audioToggleBtn?.addEventListener('click', (event) => {
   event.preventDefault();
   if (!revealAudio) return;
 
-  revealAudio.muted = !revealAudio.muted;
-  updateAudioToggleState();
+  const shouldResumeAudio = revealAudio.muted || revealAudio.paused || !revealAudioStarted;
 
-  if (!revealAudio.muted && isComplete) {
-    startRevealAudio();
-  } else if (revealAudio.muted) {
+  if (shouldResumeAudio) {
+    revealAudio.muted = false;
+    updateAudioToggleState();
+
+    if (isComplete) {
+      startRevealAudio();
+    }
+  } else {
+    revealAudio.muted = true;
     revealAudio.pause();
+    updateAudioToggleState();
   }
 });
+
+revealAudio?.addEventListener('play', updateAudioToggleState);
+revealAudio?.addEventListener('pause', updateAudioToggleState);
+revealAudio?.addEventListener('volumechange', updateAudioToggleState);
 
 document.querySelectorAll('button, a, [role="button"]').forEach((interactiveElement) => {
   interactiveElement.addEventListener('click', (event) => {
