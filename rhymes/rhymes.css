@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 :root {
   --rhymes-surface: rgba(255, 255, 255, 0.06);
   --rhymes-border: rgba(255, 255, 255, 0.12);
@@ -124,25 +126,26 @@
 }
 
 .rhyme-word-count {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: fit-content;
   max-width: 100%;
-  margin-bottom: 18px;
+  margin: 0 0 18px auto;
   padding: 11px 14px;
   border-radius: 999px;
   background: linear-gradient(135deg, rgba(255, 231, 166, 0.2), rgba(143, 238, 255, 0.16));
   border: 1px solid rgba(255, 255, 255, 0.16);
   color: #fff7d1;
   font-size: 0.9rem;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-transform: none;
   letter-spacing: 0.08em;
   font-weight: 700;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
   line-height: 1.4;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+  text-align: right;
 }
 
 @media (max-width: 600px) {
