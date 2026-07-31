@@ -553,10 +553,9 @@ audioToggleBtn?.addEventListener('click', (event) => {
   }
 });
 
-[revealButton, homeScrollButton, ...navButtons].forEach((button) => {
-  if (!button) return;
-  button.addEventListener('click', (event) => {
-    if (event.detail > 0) {
+document.querySelectorAll('button, a, [role="button"]').forEach((interactiveElement) => {
+  interactiveElement.addEventListener('click', (event) => {
+    if (event.detail > 0 && !interactiveElement.matches(':disabled')) {
       triggerButtonBurst(event);
     }
   });
