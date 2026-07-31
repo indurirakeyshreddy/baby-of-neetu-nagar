@@ -34,6 +34,8 @@ let fullNameRevealed = false;
 let revealAudioStarted = false;
 
 const revealStateKey = 'klintaraRevealState';
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 
 function readRevealState() {
   try {
@@ -447,7 +449,7 @@ function handleScroll() {
 }
 
 function updateCursorGlow(event) {
-  if (!cursorGlow) return;
+  if (!cursorGlow || isTouchDevice || prefersReducedMotion) return;
   const x = event.clientX;
   const y = event.clientY;
   cursorGlow.style.left = `${x}px`;
@@ -458,6 +460,24 @@ function updateCursorGlow(event) {
     const offsetY = (y / window.innerHeight - 0.5) * 10;
     heroPanel.style.transform = `perspective(900px) rotateX(${offsetY * -0.4}deg) rotateY(${offsetX * 0.5}deg)`;
   }
+}
+
+function addTouchFeedback() {
+  const interactiveElements = Array.from(document.querySelectorAll('button, a, [role="button"]'));
+
+  interactiveElements.forEach((element) => {
+    const removeTouchState = () => {
+      element.classList.remove('is-touching');
+    };
+
+    element.addEventListener('touchstart', () => {
+      element.classList.add('is-touching');
+    }, { passive: true });
+
+    element.addEventListener('touchend', removeTouchState, { passive: true });
+    element.addEventListener('touchcancel', removeTouchState, { passive: true });
+    element.addEventListener('blur', removeTouchState);
+  });
 }
 
 function toggleScrollTopButtons() {
@@ -543,12 +563,15 @@ audioToggleBtn?.addEventListener('click', (event) => {
 });
 
 window.addEventListener('load', resetPagePosition);
-document.addEventListener('pointermove', updateCursorGlow, { passive: true });
-document.addEventListener('pointerleave', () => {
-  if (heroPanel) {
-    heroPanel.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-  }
-});
+if (!isTouchDevice && !prefersReducedMotion) {
+  document.addEventListener('pointermove', updateCursorGlow, { passive: true });
+  document.addEventListener('pointerleave', () => {
+    if (heroPanel) {
+      heroPanel.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+    }
+  });
+}
+addTouchFeedback();
 updateActiveNav();
 updateWithUsButtonState();
 bindNavigation();

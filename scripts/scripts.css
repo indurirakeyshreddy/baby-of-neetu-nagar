@@ -12,7 +12,7 @@
 .script-card {
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 18px;
-  padding: 18px;
+  padding: clamp(14px, 3vw, 18px);
   background: rgba(255,255,255,0.06);
   backdrop-filter: blur(8px);
 }

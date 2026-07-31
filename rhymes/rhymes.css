@@ -20,9 +20,13 @@
   text-decoration: none;
   color: var(--text);
   padding: 8px 12px;
+  min-height: 44px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .table-of-contents a:hover {
@@ -147,6 +151,7 @@
 .rhyme-item {
   padding: 12px 14px;
   border-radius: 14px;
+  line-height: 1.7;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
   color: #ffffff;
