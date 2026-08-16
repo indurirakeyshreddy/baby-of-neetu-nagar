@@ -12,6 +12,13 @@ let initialAnimationTimer = null;
 let lastCelebratedMonthMilestone = 0;
 let lastCelebratedUnit = null;
 
+function getCompletedMonthCount(referenceDate = new Date()) {
+  const monthDiff = (referenceDate.getFullYear() - startDate.getFullYear()) * 12
+    + (referenceDate.getMonth() - startDate.getMonth());
+
+  return referenceDate.getDate() >= startDate.getDate() ? monthDiff : monthDiff - 1;
+}
+
 function getTimeParts() {
   const now = new Date();
   const diffMs = now.getTime() - startDate.getTime();
@@ -20,11 +27,10 @@ function getTimeParts() {
     return { years: 0, months: 0, days: 0 };
   }
 
-  const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  const years = Math.floor(totalDays / 365);
-  const remainingAfterYears = totalDays % 365;
-  const months = Math.floor(remainingAfterYears / 30);
-  const days = remainingAfterYears % 30;
+  const completedMonths = getCompletedMonthCount(now);
+  const years = Math.floor(completedMonths / 12);
+  const months = completedMonths % 12;
+  const days = Math.max(0, now.getDate() - startDate.getDate());
 
   return { years, months, days };
 }
@@ -38,9 +44,7 @@ function getMilestoneColors() {
 }
 
 function getCompletedMonthMilestone() {
-  const now = new Date();
-  const totalMonths = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
-  return now.getDate() < startDate.getDate() ? totalMonths - 1 : totalMonths;
+  return getCompletedMonthCount();
 }
 
 function getCelebrationMilestoneState(parts = {}) {
@@ -58,10 +62,13 @@ function getCelebrationMilestoneState(parts = {}) {
 
 function getCelebrationMilestoneLabel(parts = {}) {
   const state = getCelebrationMilestoneState(parts);
-  const unitLabel = state.unit === 'year'
-    ? (state.count === 1 ? 'Year' : 'Years')
-    : (state.count === 1 ? 'Month' : 'Months');
 
+  if (state.unit === 'month') {
+    const nextMonthNumber = state.count + 1;
+    return `Month ${nextMonthNumber} Begins`;
+  }
+
+  const unitLabel = state.count === 1 ? 'Year' : 'Years';
   return `${state.count} ${unitLabel}`;
 }
 
