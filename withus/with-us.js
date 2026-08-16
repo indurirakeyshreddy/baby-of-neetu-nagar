@@ -47,6 +47,10 @@ function getCompletedMonthMilestone() {
   return getCompletedMonthCount();
 }
 
+function getEnteredMonthCount(referenceDate = new Date()) {
+  return Math.max(1, getCompletedMonthCount(referenceDate) + 1);
+}
+
 function getCelebrationMilestoneState(parts = {}) {
   const years = Number(parts.years ?? 0);
 
@@ -54,9 +58,10 @@ function getCelebrationMilestoneState(parts = {}) {
     return { unit: 'year', count: Math.max(1, years) };
   }
 
+  const activeMonth = Number(parts.months ?? getCompletedMonthMilestone()) + 1;
   return {
     unit: 'month',
-    count: Math.max(1, Number(parts.months ?? getCompletedMonthMilestone()))
+    count: Math.max(1, activeMonth)
   };
 }
 
@@ -64,8 +69,7 @@ function getCelebrationMilestoneLabel(parts = {}) {
   const state = getCelebrationMilestoneState(parts);
 
   if (state.unit === 'month') {
-    const nextMonthNumber = state.count + 1;
-    return `Month ${nextMonthNumber} Begins`;
+    return `Month&nbsp;${state.count}<br><span style="font-style: italic; color: #e91e63; font-weight: 800; letter-spacing: 0.05em;">Here</span>`;
   }
 
   const unitLabel = state.count === 1 ? 'Year' : 'Years';
@@ -148,7 +152,7 @@ function showMilestoneCelebration(parts = {}) {
 
       const card = document.createElement('div');
       card.className = 'milestone-card';
-      card.textContent = milestoneLabel;
+      card.innerHTML = milestoneLabel;
 
       balloon.appendChild(sphere);
       balloon.appendChild(thread);
