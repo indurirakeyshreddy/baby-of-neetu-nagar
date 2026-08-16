@@ -69,7 +69,7 @@ function getCelebrationMilestoneLabel(parts = {}) {
   const state = getCelebrationMilestoneState(parts);
 
   if (state.unit === 'month') {
-    return `Month&nbsp;${state.count}<br><span style="font-style: italic; color: #e91e63; font-weight: 800; letter-spacing: 0.05em;">Here</span>`;
+    return `Month&nbsp;${state.count}<br><span style="font-family: 'Poppins', sans-serif; font-size: 1em; font-weight: 900; color: #3a9b5c; letter-spacing: 0.12em; text-shadow: 0 2px 8px rgba(58, 155, 92, 0.4); text-transform: uppercase;">Is On</span>`;
   }
 
   const unitLabel = state.count === 1 ? 'Year' : 'Years';

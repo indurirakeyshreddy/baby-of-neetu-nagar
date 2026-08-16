@@ -154,28 +154,28 @@
 
 /* Different balloon sizes */
 .balloon-size-xsmall {
-  --balloon-size: 24px;
-  --string-length: 45px;
+  --balloon-size: 36px;
+  --string-length: 68px;
 }
 
 .balloon-size-small {
-  --balloon-size: 30px;
-  --string-length: 55px;
+  --balloon-size: 45px;
+  --string-length: 82px;
 }
 
 .balloon-size-medium {
-  --balloon-size: 40px;
-  --string-length: 70px;
+  --balloon-size: 60px;
+  --string-length: 105px;
 }
 
 .balloon-size-large {
-  --balloon-size: 52px;
-  --string-length: 88px;
+  --balloon-size: 78px;
+  --string-length: 132px;
 }
 
 .balloon-size-xlarge {
-  --balloon-size: 64px;
-  --string-length: 100px;
+  --balloon-size: 96px;
+  --string-length: 150px;
 }
 
 /* ============================================
