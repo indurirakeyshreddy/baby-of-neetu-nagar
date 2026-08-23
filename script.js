@@ -365,43 +365,6 @@ function buildFullNameReveal() {
   });
 }
 
-function createPremiumRevealBloom(x = window.innerWidth * 0.5, y = window.innerHeight * 0.3) {
-  const bloom = document.createElement('div');
-  bloom.className = 'premium-reveal-bloom';
-  bloom.style.left = `${x}px`;
-  bloom.style.top = `${y}px`;
-
-  const particleCount = 8;
-  for (let i = 0; i < particleCount; i += 1) {
-    const particle = document.createElement('span');
-    particle.className = 'premium-particle';
-
-    const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.2;
-    const distance = 34 + Math.random() * 64;
-    const size = 2.4 + Math.random() * 3.4;
-
-    particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
-    particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
-    particle.style.setProperty('--size', `${size}px`);
-    particle.style.animationDelay = `${Math.random() * 0.12}s`;
-
-    bloom.appendChild(particle);
-  }
-
-  const ring = document.createElement('span');
-  ring.className = 'premium-ring';
-  bloom.appendChild(ring);
-
-  const core = document.createElement('span');
-  core.className = 'premium-core';
-  core.style.animationDelay = `${Math.random() * 0.04}s`;
-  bloom.appendChild(core);
-
-  const bloomLayer = document.querySelector('.final-card') || document.body;
-  bloomLayer.appendChild(bloom);
-  setTimeout(() => bloom.remove(), 2600);
-}
-
 function revealFullName() {
   if (!finalReveal || !fullNameReveal || fullNameRevealed) return;
 
@@ -410,8 +373,12 @@ function revealFullName() {
   finalReveal.classList.add('visible');
 
   const letters = Array.from(fullNameReveal.querySelectorAll('.full-name-letter'));
-  const letterDelay = 120;
-  const revealHold = 720;
+  const letterDelay = 110;
+
+  if (prefersReducedMotion) {
+    letters.forEach((letter) => letter.classList.add('revealed'));
+    return;
+  }
 
   letters.forEach((letter, index) => {
     setTimeout(() => {
@@ -419,33 +386,6 @@ function revealFullName() {
     }, index * letterDelay);
   });
 
-  setTimeout(() => {
-    fullNameReveal.classList.add('reveal-complete');
-    const card = finalReveal?.querySelector('.final-card');
-    card?.classList.add('reveal-glow');
-  }, letters.length * letterDelay + revealHold);
-
-  setTimeout(() => {
-    const panel = finalReveal?.querySelector('.final-card') || finalReveal;
-    const rect = panel?.getBoundingClientRect();
-
-    if (!rect) {
-      return;
-    }
-
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const bloomCount = 4;
-
-    for (let i = 0; i < bloomCount; i += 1) {
-      const angle = (Math.PI * 2 * i) / bloomCount;
-      const radiusX = (rect.width * 0.12) + Math.random() * (rect.width * 0.14);
-      const radiusY = (rect.height * 0.09) + Math.random() * (rect.height * 0.12);
-      const x = centerX + Math.cos(angle) * radiusX;
-      const y = centerY + Math.sin(angle) * radiusY;
-      setTimeout(() => createPremiumRevealBloom(x, y), i * 95);
-    }
-  }, 300);
 }
 
 function handleScroll() {

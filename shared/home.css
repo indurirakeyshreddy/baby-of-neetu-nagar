@@ -484,56 +484,29 @@
 
 .final-reveal.hidden {
   opacity: 0;
-  transform: translateY(28px);
   pointer-events: none;
 }
 
 .final-reveal.visible {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 700ms ease, transform 700ms ease;
+  transition: opacity 700ms ease;
 }
 
 .final-card {
   position: relative;
   overflow: hidden;
-  padding: 36px 28px;
-  border-radius: 32px;
+  padding: 24px 26px;
+  border-radius: 24px;
   text-align: center;
-  background: linear-gradient(135deg, rgba(255, 238, 239, 0.22), rgba(255, 255, 255, 0.08) 46%, rgba(181, 244, 222, 0.14));
-  border: 1px solid rgba(255, 214, 208, 0.55);
-  box-shadow: 0 24px 62px rgba(19, 11, 30, 0.34), 0 0 0 6px rgba(255, 215, 211, 0.05), inset 0 1px 0 rgba(255,255,255,0.38);
-  transform: translateY(14px);
-  opacity: 0;
-  transition: transform 0.55s ease, opacity 0.55s ease, box-shadow 0.55s ease;
-}
-
-.final-reveal.visible .final-card {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.final-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 50% 14%, rgba(255, 255, 255, 0.62), rgba(255, 231, 166, 0.14) 28%, transparent 62%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.12);
   opacity: 0;
   transition: opacity 0.55s ease;
 }
 
-.final-card::after {
-  content: none;
-}
-
-.final-card.reveal-glow::before {
+.final-reveal.visible .final-card {
   opacity: 1;
-}
-
-.final-card.reveal-glow::after {
-  opacity: 0.42;
 }
 
 .final-card > * {
@@ -551,8 +524,10 @@
 
 .full-name {
   display: flex;
+  width: 100%;
+  max-width: 100%;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.08em;
   font-size: clamp(1.3rem, 4.4vw, 3rem);
   font-weight: 700;
@@ -560,59 +535,27 @@
   margin: 10px 0 18px;
   line-height: 1.1;
   opacity: 0;
-  transform: translateY(18px) scale(0.98);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: none;
+  transition: opacity 0.5s ease;
 }
 
 .final-reveal.visible .full-name {
   opacity: 1;
-  transform: translateY(0) scale(1);
 }
 
 .full-name span {
   position: relative;
   display: inline-block;
   opacity: 0;
-  transform: translateY(12px) scale(0.98);
+  clip-path: inset(100% 0 0 0);
   color: #fff9ed;
-  background: linear-gradient(90deg, #dbe5ff 0%, #fff9ed 50%, #dbe5ff 100%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 22px rgba(255, 231, 166, 0.24);
-  transition: opacity 0.48s ease, transform 0.48s ease;
-  will-change: opacity, transform;
+  transition: opacity 0.5s ease-out, clip-path 0.72s cubic-bezier(0.22, 0.68, 0.2, 1);
+  will-change: opacity, clip-path;
 }
 
 .full-name span.revealed {
   opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.full-name.reveal-complete {
-  animation: fullNameCelebrate 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-.full-name.reveal-complete .full-name-letter {
-  animation: revealLetterSoftFinish 0.95s cubic-bezier(0.16, 0.84, 0.2, 1) forwards, fullNameLightSweep 3.8s ease-in-out 0.9s infinite;
-}
-
-.final-card.reveal-glow {
-  box-shadow: 0 0 0 1px rgba(255, 231, 166, 0.32), 0 24px 80px rgba(12, 18, 42, 0.38), 0 0 46px rgba(255, 231, 166, 0.18);
-  animation: revealCardBreath 4.2s ease-in-out 1s infinite;
-}
-
-.letter-sparkle {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,230,140,0.95) 50%, transparent 100%);
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.8);
-  animation: letterSparkle 0.7s ease-out forwards;
+  clip-path: inset(0 0 0 0);
 }
 
 .full-name .space {
@@ -669,65 +612,6 @@
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes letterSparkle {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(0.65);
-  }
-  40% {
-    opacity: 1;
-    transform: translate(-50%, -72%) scale(1.05);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -110%) scale(0.8);
-  }
-}
-
-@keyframes fullNameCelebrate {
-  0% {
-    transform: scale(0.985);
-    filter: brightness(0.96);
-  }
-  40% {
-    transform: scale(1.01);
-    filter: brightness(1.04);
-  }
-  100% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-}
-
-@keyframes fullNameLightSweep {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes revealCardBreath {
-  0%, 100% {
-    box-shadow: 0 0 0 1px rgba(255, 231, 166, 0.32), 0 24px 80px rgba(12, 18, 42, 0.38), 0 0 46px rgba(255, 231, 166, 0.18);
-  }
-  50% {
-    box-shadow: 0 0 0 1px rgba(255, 249, 237, 0.58), 0 26px 86px rgba(12, 18, 42, 0.42), 0 0 60px rgba(255, 231, 166, 0.28);
-  }
-}
-
-@keyframes revealShimmer {
-  0%, 100% {
-    transform: scaleX(0.72);
-    opacity: 0.28;
-  }
-  50% {
-    transform: scaleX(1);
-    opacity: 0.72;
   }
 }
 
@@ -843,22 +727,55 @@
     padding: 18px 16px;
   }
 
+  .final-label {
+    margin-bottom: 14px;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+  }
+
   .full-name {
-    font-size: clamp(0.78rem, 3.8vw, 1.15rem);
-    letter-spacing: 0.03em;
-    gap: 0.03em;
-    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    font-size: clamp(0.68rem, 4.8vw, 1.85rem);
+    font-weight: 800;
+    letter-spacing: 0.012em;
+    gap: 0.012em;
+    flex-wrap: nowrap;
     justify-content: center;
-    white-space: normal;
+    margin-inline: auto;
+    text-align: center;
+    white-space: nowrap;
     overflow-x: visible;
+    opacity: 0;
+    transform: none;
+    transition: opacity 0.5s ease;
   }
 
   .full-name .space {
     width: 0.16em;
   }
 
+  .full-name span {
+    clip-path: inset(100% 0 0 0);
+    transition: opacity 0.5s ease-out, clip-path 0.72s cubic-bezier(0.22, 0.68, 0.2, 1);
+  }
+
+  .full-name span.revealed {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+
   .inspiration-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .full-name,
+  .full-name span {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transition: none;
   }
 }
 
@@ -880,9 +797,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .final-card::after,
-  .final-card.reveal-glow {
-    animation: none;
-  }
-}
