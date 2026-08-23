@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">BABY-OF-NEETU-NAGAR | A Family Blessing</title>
+  <desc id="desc">A special family name is waiting to be revealed.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#080c24"/>
+      <stop offset="0.52" stop-color="#18245e"/>
+      <stop offset="1" stop-color="#075b6b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0" stop-color="#ffe7a6" stop-opacity=".3"/>
+      <stop offset=".42" stop-color="#8ff5e4" stop-opacity=".1"/>
+      <stop offset="1" stop-color="#080c24" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="type" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff9ed"/>
+      <stop offset=".48" stop-color="#ffe7a6"/>
+      <stop offset="1" stop-color="#8ff5e4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <circle cx="108" cy="112" r="3" fill="#fff9ed" opacity=".8"/>
+  <circle cx="1030" cy="120" r="4" fill="#ffe7a6" opacity=".8"/>
+  <circle cx="1100" cy="500" r="3" fill="#8ff5e4" opacity=".8"/>
+  <circle cx="150" cy="510" r="4" fill="#b8c7ff" opacity=".7"/>
+  <ellipse cx="600" cy="330" rx="430" ry="215" fill="none" stroke="#8ff5e4" stroke-opacity=".18" stroke-width="2"/>
+  <ellipse cx="600" cy="330" rx="350" ry="175" fill="none" stroke="#ffe7a6" stroke-opacity=".2" stroke-width="1.5" transform="rotate(-14 600 330)"/>
+  <text x="600" y="212" fill="#ffe7a6" font-family="Georgia, serif" font-size="24" letter-spacing="9" text-anchor="middle">A FAMILY BLESSING</text>
+  <text x="600" y="342" fill="url(#type)" font-family="Georgia, serif" font-size="86" font-weight="700" letter-spacing="8" text-anchor="middle">A NAME AWAITS</text>
+  <text x="600" y="405" fill="#fff9ed" fill-opacity=".82" font-family="Arial, sans-serif" font-size="24" letter-spacing="2" text-anchor="middle">Enter to discover a little name filled with grace, hope, and light.</text>
+  <path d="M450 468h300" stroke="url(#type)" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+</svg>
