@@ -1,0 +1,7 @@
+{
+  "pageTitle": "Hindi Rhymes | BABY-OF-NEETU-NAGAR",
+  "pageDescription": "A dedicated page for sweet Hindi rhymes and verses.",
+  "lang": "hi",
+  "className": "hindi-text",
+  "rhymes": ["chandamama.json", "ek-mota-hathi.json", "aha-tamatar.json", "lallaa-lallaa-lory.json", "nani-teri-morni.json", "upar-pankha-chalta-hai.json", "machhli-jal-ki-rani-hai.json"]
+}

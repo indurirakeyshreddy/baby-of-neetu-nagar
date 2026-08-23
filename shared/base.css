@@ -248,7 +248,6 @@ body::after {
   position: relative;
   z-index: 1;
   padding: 18px clamp(12px, 3vw, 24px) calc(24px + env(safe-area-inset-bottom));
-  will-change: transform;
 }
 
 .button-burst {

@@ -152,6 +152,8 @@ function showDistinctRhymeWordCount() {
   const label = labels[pageName];
   if (!label) return;
 
+  document.querySelectorAll('.rhyme-word-count').forEach((counter) => counter.remove());
+
   const count = getDistinctRhymeWords();
   const counter = document.createElement('div');
   counter.className = 'rhyme-word-count';
@@ -168,6 +170,8 @@ function showDistinctRhymeWordCount() {
     }
   }
 }
+
+window.refreshRhymeWordCount = showDistinctRhymeWordCount;
 
 function calculateDaysSinceBirth() {
   if (!birthDateInput || !birthdayResult) return;
@@ -589,7 +593,11 @@ addTouchFeedback();
 updateActiveNav();
 updateWithUsButtonState();
 bindNavigation();
-showDistinctRhymeWordCount();
+if (document.querySelector('[data-rhyme-language]')) {
+  document.addEventListener('rhymesloaded', showDistinctRhymeWordCount, { once: true });
+} else {
+  showDistinctRhymeWordCount();
+}
 
 rhymeScrollButton?.addEventListener('click', scrollToRhymeContents);
 homeScrollButton?.addEventListener('click', scrollToPageTop);

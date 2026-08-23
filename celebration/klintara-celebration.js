@@ -12,6 +12,7 @@ const KlintaraCelebration = (() => {
     containerClass: 'klintara-celebration',
     minDuration: 7200,
     maxDuration: 9000,
+    spawnInterval: 90,
     balloonSizes: ['xsmall', 'small', 'medium', 'large', 'xlarge'],
     balloonShapes: ['circle', 'oval'],
     balloonColors: [
@@ -27,6 +28,7 @@ const KlintaraCelebration = (() => {
   let isPlaying = false;
   let celebrationContainer = null;
   let maxAnimationTime = 0; // Track longest animation to prevent early cleanup
+  let spawnTimer = null;
 
   /**
    * Check if user prefers reduced motion
@@ -112,8 +114,8 @@ const KlintaraCelebration = (() => {
       reducedMotion ? 6000 : CONFIG.minDuration,
       reducedMotion ? 8000 : CONFIG.maxDuration
     );
-    const launchWindow = reducedMotion ? 900 : 3600;
-    const delay = (index / Math.max(totalBalloons - 1, 1)) * launchWindow + getRandomNumber(0, 180);
+    const launchWindow = reducedMotion ? 180 : 260;
+    const delay = getRandomNumber(0, launchWindow);
     const totalTime = duration + delay;
 
     // Track the maximum animation time across all balloons
@@ -126,7 +128,7 @@ const KlintaraCelebration = (() => {
     balloon.style.setProperty('--float-amplitude', `${getRandomNumber(12, 26)}px`);
 
     // Apply animation using inline style for dynamic values
-    balloon.style.animation = `${animation} ${duration}ms ${CONFIG.easing} ${delay}ms forwards`;
+    balloon.style.animation = `${animation} ${duration}ms ${CONFIG.easing} ${delay}ms both`;
   };
 
   /**
@@ -137,13 +139,26 @@ const KlintaraCelebration = (() => {
     const reducedMotion = prefersReducedMotion();
     const balloonCount = reducedMotion ? 8 : CONFIG.balloonCount;
 
-    maxAnimationTime = 0; // Reset timer
+    maxAnimationTime = (balloonCount - 1) * (reducedMotion ? 180 : CONFIG.spawnInterval) + CONFIG.maxDuration;
+    let nextBalloonIndex = 0;
 
-    for (let i = 0; i < balloonCount; i++) {
-      const balloon = createBalloon(i);
+    const spawnBalloon = () => {
+      if (!celebrationContainer || nextBalloonIndex >= balloonCount) {
+        if (spawnTimer) {
+          clearInterval(spawnTimer);
+          spawnTimer = null;
+        }
+        return;
+      }
+
+      const balloon = createBalloon(nextBalloonIndex);
       celebrationContainer.appendChild(balloon);
-      animateBalloon(balloon, i, balloonCount);
-    }
+      animateBalloon(balloon, nextBalloonIndex, balloonCount);
+      nextBalloonIndex += 1;
+    };
+
+    spawnBalloon();
+    spawnTimer = setInterval(spawnBalloon, reducedMotion ? 180 : CONFIG.spawnInterval);
   };
 
   /**
@@ -156,6 +171,11 @@ const KlintaraCelebration = (() => {
 
       // Schedule cleanup after ALL animations complete
       setTimeout(() => {
+        if (spawnTimer) {
+          clearInterval(spawnTimer);
+          spawnTimer = null;
+        }
+
         if (celebrationContainer && celebrationContainer.parentNode) {
           celebrationContainer.parentNode.removeChild(celebrationContainer);
           celebrationContainer = null;

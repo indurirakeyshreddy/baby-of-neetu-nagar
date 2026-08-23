@@ -352,11 +352,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .balloon {
-    animation: none !important;
-  }
-
-  .balloon-sphere {
-    animation: fade-out 4s ease-in forwards;
+    animation: fade-out 4s ease-in forwards !important;
   }
 }
 
