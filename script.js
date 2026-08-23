@@ -609,3 +609,18 @@ birthDateInput?.addEventListener('change', calculateDaysSinceBirth);
 calculateDaysSinceBirth();
 
 document.addEventListener('scroll', handleScroll, { passive: true });
+
+function registerOfflineApp() {
+  if (!('serviceWorker' in navigator)) return;
+
+  const scriptElement = document.querySelector('script[src*="script.js"]');
+  if (!scriptElement) return;
+
+  const serviceWorkerUrl = new URL('sw.js', scriptElement.src);
+  navigator.serviceWorker.register(serviceWorkerUrl, { scope: serviceWorkerUrl.pathname.replace(/sw\.js$/, '') })
+    .catch(() => {
+      // Offline support is progressive enhancement; the site remains usable without it.
+    });
+}
+
+window.addEventListener('load', registerOfflineApp, { once: true });

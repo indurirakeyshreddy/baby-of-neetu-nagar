@@ -1,0 +1,19 @@
+{
+  "name": "BABY-OF-NEETU-NAGAR",
+  "short_name": "Klintara",
+  "description": "A family blessing, rhymes, memories, and little moments of love.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050816",
+  "theme_color": "#0c5270",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./assets/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
