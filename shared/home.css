@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
 
 .home-page-actions {
   margin-top: 18px;
@@ -530,6 +531,7 @@
   flex-wrap: nowrap;
   gap: 0.08em;
   font-size: clamp(1.3rem, 4.4vw, 3rem);
+  font-family: "Poppins", "Segoe UI", sans-serif;
   font-weight: 700;
   letter-spacing: 0.12em;
   margin: 10px 0 18px;
@@ -547,15 +549,13 @@
   position: relative;
   display: inline-block;
   opacity: 0;
-  clip-path: inset(100% 0 0 0);
+  transform: none;
   color: #fff9ed;
-  transition: opacity 0.5s ease-out, clip-path 0.72s cubic-bezier(0.22, 0.68, 0.2, 1);
-  will-change: opacity, clip-path;
+  transition: opacity 0.08s steps(1, end);
 }
 
 .full-name span.revealed {
   opacity: 1;
-  clip-path: inset(0 0 0 0);
 }
 
 .full-name .space {
@@ -756,13 +756,12 @@
   }
 
   .full-name span {
-    clip-path: inset(100% 0 0 0);
-    transition: opacity 0.5s ease-out, clip-path 0.72s cubic-bezier(0.22, 0.68, 0.2, 1);
+    transform: none;
+    transition: opacity 0.08s steps(1, end);
   }
 
   .full-name span.revealed {
     opacity: 1;
-    clip-path: inset(0 0 0 0);
   }
 
   .inspiration-grid {
@@ -774,7 +773,7 @@
   .full-name,
   .full-name span {
     opacity: 1;
-    clip-path: inset(0 0 0 0);
+    transform: none;
     transition: none;
   }
 }
