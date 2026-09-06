@@ -34,6 +34,7 @@ let stepIndex = 0;
 let isComplete = false;
 let fullNameRevealed = false;
 let revealAudioStarted = false;
+let finalNameInView = false;
 
 const revealStateKey = 'klintaraRevealState';
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -384,11 +385,15 @@ function buildFullNameReveal() {
 }
 
 function revealFullName() {
-  if (!finalReveal || !fullNameReveal || fullNameRevealed) return;
+  if (!finalReveal || !fullNameReveal) return;
 
   fullNameRevealed = true;
+  writeRevealState();
   finalReveal.classList.remove('hidden');
   finalReveal.classList.add('visible');
+
+  fullNameReveal.classList.remove('reveal-complete');
+  void fullNameReveal.offsetWidth;
 
   requestAnimationFrame(() => {
     fullNameReveal.classList.add('reveal-complete');
@@ -396,12 +401,17 @@ function revealFullName() {
 }
 
 function observeFullNameReveal() {
-  if (!finalReveal || !isComplete || fullNameRevealed || !('IntersectionObserver' in window)) return;
+  if (!finalReveal || !isComplete || !('IntersectionObserver' in window)) return;
 
   const observer = new IntersectionObserver((entries) => {
-    if (entries.some((entry) => entry.isIntersecting)) {
+    const entry = entries[0];
+    if (!entry) return;
+
+    if (entry.isIntersecting && !finalNameInView) {
+      finalNameInView = true;
       revealFullName();
-      observer.disconnect();
+    } else if (!entry.isIntersecting) {
+      finalNameInView = false;
     }
   }, { rootMargin: '0px 0px 180px' });
 
@@ -409,11 +419,37 @@ function observeFullNameReveal() {
 }
 
 function handleScroll() {
-  if (!isComplete || fullNameRevealed) return;
+  if (!isComplete || !finalReveal) return;
 
   const scrollTop = Math.max(window.scrollY, document.documentElement.scrollTop || 0);
   const distanceFromBottom = document.documentElement.scrollHeight - (window.innerHeight + scrollTop);
-  if (distanceFromBottom <= 220) {
+  const finalRect = finalReveal.getBoundingClientRect();
+  const isNearFinalName = finalRect.top < window.innerHeight + 180 && finalRect.bottom > -180;
+
+  if (distanceFromBottom <= 220 || isNearFinalName) {
+    if (!finalNameInView) {
+      finalNameInView = true;
+      revealFullName();
+    }
+  } else {
+    finalNameInView = false;
+  }
+}
+
+function restoreFullNameState() {
+  if (fullNameRevealed) {
+    finalReveal?.classList.remove('hidden');
+    finalReveal?.classList.add('visible');
+    fullNameReveal?.classList.add('reveal-complete');
+  }
+}
+
+function resetFinalNameViewState() {
+  if (!finalReveal) return;
+
+  const finalRect = finalReveal.getBoundingClientRect();
+  finalNameInView = finalRect.top < window.innerHeight + 180 && finalRect.bottom > -180;
+  if (finalNameInView) {
     revealFullName();
   }
 }
@@ -503,13 +539,10 @@ if (isComplete) {
   storySection?.classList.add('visible');
 }
 
-if (fullNameRevealed) {
-  finalReveal?.classList.remove('hidden');
-  finalReveal?.classList.add('visible');
-  fullNameReveal?.classList.add('reveal-complete');
-}
+restoreFullNameState();
 
 observeFullNameReveal();
+resetFinalNameViewState();
 
 revealButton?.addEventListener('click', (event) => {
   if (isComplete) return;
