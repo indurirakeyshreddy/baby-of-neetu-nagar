@@ -411,7 +411,8 @@ function observeFullNameReveal() {
 function handleScroll() {
   if (!isComplete || fullNameRevealed) return;
 
-  const distanceFromBottom = document.documentElement.scrollHeight - (window.innerHeight + window.scrollY);
+  const scrollTop = Math.max(window.scrollY, document.documentElement.scrollTop || 0);
+  const distanceFromBottom = document.documentElement.scrollHeight - (window.innerHeight + scrollTop);
   if (distanceFromBottom <= 220) {
     revealFullName();
   }
@@ -576,7 +577,7 @@ calculateBirthdayBtn?.addEventListener('click', calculateDaysSinceBirth);
 birthDateInput?.addEventListener('change', calculateDaysSinceBirth);
 calculateDaysSinceBirth();
 
-document.addEventListener('scroll', handleScroll, { passive: true });
+window.addEventListener('scroll', handleScroll, { passive: true });
 window.addEventListener('resize', handleScroll, { passive: true });
 
 function registerOfflineApp() {

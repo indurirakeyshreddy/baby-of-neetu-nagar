@@ -489,6 +489,8 @@
 }
 
 .final-reveal.visible {
+  position: relative;
+  z-index: 10000;
   opacity: 1;
   transition: opacity 700ms ease;
 }
