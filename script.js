@@ -17,6 +17,7 @@ const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
 const birthdayResult = document.getElementById('birthdayResult');
 const rhymeScrollButton = document.getElementById('rhymeScrollTop');
 const homeScrollButton = document.getElementById('homeScrollTop');
+const eventsScrollButton = document.getElementById('eventsScrollTop');
 const mobileInstallGate = document.getElementById('mobileInstallGate');
 const mobileInstallButton = document.getElementById('mobileInstallButton');
 const mobileInstallCopy = document.getElementById('mobileInstallCopy');
@@ -550,6 +551,10 @@ function toggleScrollTopButtons() {
   if (homeScrollButton) {
     homeScrollButton.classList.toggle('visible', shouldShow);
   }
+
+  if (eventsScrollButton) {
+    eventsScrollButton.classList.toggle('visible', shouldShow);
+  }
 }
 
 function scrollToPageTop() {
@@ -657,6 +662,7 @@ if (document.querySelector('[data-rhyme-language]')) {
 
 rhymeScrollButton?.addEventListener('click', scrollToRhymeContents);
 homeScrollButton?.addEventListener('click', scrollToPageTop);
+eventsScrollButton?.addEventListener('click', scrollToPageTop);
 window.addEventListener('scroll', toggleScrollTopButtons, { passive: true });
 toggleScrollTopButtons();
 

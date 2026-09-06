@@ -326,6 +326,44 @@ body {
   padding-top: 18px;
 }
 
+.events-scroll-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: var(--events-ink);
+  background: linear-gradient(135deg, rgba(245, 199, 121, 0.2), rgba(13, 17, 32, 0.9));
+  font-size: 1.4rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.events-scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.events-scroll-top:hover,
+.events-scroll-top:focus-visible {
+  border-color: var(--events-warm);
+  outline: none;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32);
+}
+
 @media (max-width: 820px) {
   .intro-grid {
     grid-template-columns: 1fr;
