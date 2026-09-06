@@ -508,11 +508,27 @@
 
 .final-reveal.visible .final-card {
   opacity: 1;
+  animation: finalCardLift 1250ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .final-card > * {
   position: relative;
   z-index: 1;
+}
+
+.final-card::before {
+  content: "";
+  position: absolute;
+  inset: -45% 12% 18%;
+  background: radial-gradient(ellipse, rgba(255, 231, 166, 0.18), rgba(143, 238, 255, 0.07) 34%, transparent 72%);
+  filter: blur(22px);
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+}
+
+.final-reveal.visible .final-card::before {
+  animation: finalCardHalo 1800ms 180ms ease-out forwards;
 }
 
 .final-label {
@@ -521,9 +537,17 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: 0.82rem;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.final-reveal.visible .final-label {
+  animation: finalLabelIn 700ms 260ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .full-name {
+  position: relative;
+  overflow: hidden;
   display: flex;
   width: 100%;
   max-width: 100%;
@@ -537,31 +561,100 @@
   margin: 10px 0 18px;
   line-height: 1.1;
   opacity: 0;
-  transform: none;
-  transition: opacity 0.5s ease;
+  transform: translateY(20px) scale(0.92);
+  filter: blur(14px);
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 34px rgba(255, 231, 166, 0.36);
+  transition: opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1), transform 1400ms cubic-bezier(0.16, 1, 0.3, 1), filter 1400ms cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 1400ms cubic-bezier(0.16, 1, 0.3, 1), text-shadow 1600ms ease;
 }
 
 .final-reveal.visible .full-name {
   opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 18px rgba(255, 231, 166, 0.16);
 }
 
 .full-name span {
   position: relative;
   display: inline-block;
-  opacity: 0;
+  opacity: 1;
   transform: none;
   color: #fff9ed;
-  transition: opacity 0.08s steps(1, end);
-}
-
-.full-name span.revealed {
-  opacity: 1;
 }
 
 .full-name .space {
   width: 0.28em;
-  opacity: 0;
   transform: none;
+}
+
+.full-name::after {
+  content: "";
+  position: absolute;
+  inset: -20% auto -20% -35%;
+  width: 24%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.82), rgba(255, 231, 166, 0.35), transparent);
+  filter: blur(10px);
+  opacity: 0;
+  transform: skewX(-18deg) translateX(-120%);
+  pointer-events: none;
+}
+
+.full-name.reveal-complete::after {
+  opacity: 0.75;
+  animation: nameLightSweep 1300ms 260ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes nameLightSweep {
+  0% {
+    transform: skewX(-18deg) translateX(-120%);
+  }
+
+  100% {
+    transform: skewX(-18deg) translateX(560%);
+  }
+}
+
+@keyframes finalCardLift {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+  }
+
+  65% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.002);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes finalCardHalo {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  45% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0.28;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes finalLabelIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .final-blessing {
@@ -747,8 +840,8 @@
     white-space: nowrap;
     overflow-x: visible;
     opacity: 0;
-    transform: none;
-    transition: opacity 0.5s ease;
+    letter-spacing: 0.08em;
+    transition: opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1), transform 1400ms cubic-bezier(0.16, 1, 0.3, 1), filter 1400ms cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 1400ms cubic-bezier(0.16, 1, 0.3, 1), text-shadow 1600ms ease;
   }
 
   .full-name .space {
@@ -756,8 +849,7 @@
   }
 
   .full-name span {
-    transform: none;
-    transition: opacity 0.08s steps(1, end);
+    transition: none;
   }
 
   .full-name span.revealed {
@@ -770,11 +862,37 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .final-reveal.visible .final-card,
+  .final-reveal.visible .final-card::before,
+  .final-reveal.visible .final-label {
+    animation: none;
+  }
+
+  .final-reveal.visible .final-card {
+    opacity: 1;
+    transform: none;
+  }
+
+  .final-reveal.visible .final-card::before {
+    opacity: 0.28;
+    transform: none;
+  }
+
+  .final-reveal.visible .final-label {
+    opacity: 1;
+    transform: none;
+  }
+
   .full-name,
   .full-name span {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
+  }
+
+  .full-name::after {
+    display: none;
   }
 }
 

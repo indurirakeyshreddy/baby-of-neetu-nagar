@@ -372,20 +372,9 @@ function revealFullName() {
   finalReveal.classList.remove('hidden');
   finalReveal.classList.add('visible');
 
-  const letters = Array.from(fullNameReveal.querySelectorAll('.full-name-letter'));
-  const letterDelay = 110;
-
-  if (prefersReducedMotion) {
-    letters.forEach((letter) => letter.classList.add('revealed'));
-    return;
-  }
-
-  letters.forEach((letter, index) => {
-    setTimeout(() => {
-      letter.classList.add('revealed');
-    }, index * letterDelay);
+  requestAnimationFrame(() => {
+    fullNameReveal.classList.add('reveal-complete');
   });
-
 }
 
 function handleScroll() {
