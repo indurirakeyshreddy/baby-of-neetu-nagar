@@ -63,7 +63,7 @@ function showMobileInstallGate() {
 
   const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
   if (isIos) {
-    mobileInstallCopy.textContent = 'In Safari, tap Share, choose Add to Home Screen, then open Klintara from your Home Screen.';
+    mobileInstallCopy.textContent = 'In Safari, tap Share, choose Add to Home Screen, then open Klintara app from your Home Screen to get the immersive experience.';
     mobileInstallButton.hidden = true;
     mobileInstallHelp.textContent = 'The website stays locked until it is opened from the installed app.';
   } else {
