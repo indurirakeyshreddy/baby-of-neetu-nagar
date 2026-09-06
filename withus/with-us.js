@@ -1,4 +1,4 @@
-const startDate = new Date('2026-06-16T10:34:00');
+const startDate = new Date(2026, 5, 16, 10, 34, 0);
 const yearsValue = document.getElementById('yearsValue');
 const monthsValue = document.getElementById('monthsValue');
 const daysValue = document.getElementById('daysValue');
@@ -12,11 +12,27 @@ let initialAnimationTimer = null;
 let lastCelebratedMonthMilestone = 0;
 let lastCelebratedUnit = null;
 
+function getAnniversaryDate(completedMonths) {
+  const anniversary = new Date(startDate);
+  anniversary.setMonth(startDate.getMonth() + completedMonths);
+  return anniversary;
+}
+
 function getCompletedMonthCount(referenceDate = new Date()) {
-  const monthDiff = (referenceDate.getFullYear() - startDate.getFullYear()) * 12
+  if (referenceDate.getTime() < startDate.getTime()) return 0;
+
+  let completedMonths = (referenceDate.getFullYear() - startDate.getFullYear()) * 12
     + (referenceDate.getMonth() - startDate.getMonth());
 
-  return referenceDate.getDate() >= startDate.getDate() ? monthDiff : monthDiff - 1;
+  while (completedMonths > 0 && getAnniversaryDate(completedMonths) > referenceDate) {
+    completedMonths -= 1;
+  }
+
+  while (getAnniversaryDate(completedMonths + 1) <= referenceDate) {
+    completedMonths += 1;
+  }
+
+  return completedMonths;
 }
 
 function getTimeParts() {
@@ -28,9 +44,10 @@ function getTimeParts() {
   }
 
   const completedMonths = getCompletedMonthCount(now);
+  const latestAnniversary = getAnniversaryDate(completedMonths);
   const years = Math.floor(completedMonths / 12);
   const months = completedMonths % 12;
-  const days = Math.max(0, now.getDate() - startDate.getDate());
+  const days = Math.floor((now.getTime() - latestAnniversary.getTime()) / 86400000);
 
   return { years, months, days };
 }
