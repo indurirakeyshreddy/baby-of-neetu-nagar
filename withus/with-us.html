@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../assets/favicon.svg" />
   <link rel="stylesheet" href="../shared/base.css" />
   <link rel="stylesheet" href="../shared/components.css" />
-  <link rel="stylesheet" href="withus.css?v=20260906-4" />
+  <link rel="stylesheet" href="withus.css?v=20260907-6" />
   <link rel="stylesheet" href="../celebration/klintara-celebration.css?v=20260727" />
 </head>
 
@@ -59,34 +59,55 @@
     <a class="nav-btn active" href="with-us.html" data-target="with-us">WithUs</a>
   </div>
 
-  <main class="page-shell">
-    <section class="feature-section">
-      <div class="feature-card withus-card">
-        <p class="section-eyebrow"></p>
-        <h1 class="withus-title">KLINTARA has been with us since</h1>
-        <p class="withus-date">2026-06-16 • 10:34 AM</p>
+  <main class="withus-shell">
+    <header class="withus-intro">
+      <p class="withus-kicker">A living family timeline</p>
+      <div class="withus-intro-grid">
+        <span class="withus-intro-index">01 / 01</span>
+        <h1>KLINTARA,<br /><em>with us always.</em></h1>
+        <p class="withus-intro-copy">A quiet clock for every day, month, and year held together by love.</p>
+      </div>
+    </header>
 
-        <div class="withus-timer" id="withUsTimer" aria-live="polite">
-          <div class="withus-counter-card">
-            <span class="withus-label">Years</span>
-            <span class="withus-value" id="yearsValue">000</span>
-          </div>
-          <div class="withus-counter-card">
-            <span class="withus-label">Months</span>
-            <span class="withus-value" id="monthsValue">00</span>
-          </div>
-          <div class="withus-counter-card">
-            <span class="withus-label">Days</span>
-            <span class="withus-value" id="daysValue">00</span>
+    <section class="withus-story-grid" aria-labelledby="withUsTitle">
+      <div class="withus-grid-rule" aria-hidden="true"></div>
+      <article class="withus-card">
+        <div class="withus-identity">
+          <div class="withus-number" aria-hidden="true">01</div>
+          <div>
+            <p class="withus-detail-label">The beginning</p>
+            <p class="withus-date">2026-06-16 <span aria-hidden="true">•</span> 10:34 AM</p>
           </div>
         </div>
-
-        <p id="withUsMessage" class="withus-message">Counting every cherished moment in real time.</p>
-      </div>
+        <div class="withus-title-block">
+          <p class="withus-marker">Every moment matters</p>
+          <h2 id="withUsTitle">KLINTARA has been<br /><em>with us since.</em></h2>
+        </div>
+        <div class="withus-timer-wrap">
+          <p class="withus-detail-label">Time held with love</p>
+          <div class="withus-timer" id="withUsTimer" aria-live="polite">
+            <div class="withus-counter-card">
+              <span class="withus-label">Years</span>
+              <span class="withus-value" id="yearsValue">000</span>
+            </div>
+            <div class="withus-counter-card">
+              <span class="withus-label">Months</span>
+              <span class="withus-value" id="monthsValue">00</span>
+            </div>
+            <div class="withus-counter-card">
+              <span class="withus-label">Days</span>
+              <span class="withus-value" id="daysValue">00</span>
+            </div>
+          </div>
+          <p id="withUsMessage" class="withus-message">Counting every cherished moment in real time.</p>
+        </div>
+      </article>
     </section>
   </main>
 
-  <script src="../script.js?v=20260727"></script>
+  <button class="withus-scroll-top" id="withusScrollTop" type="button" aria-label="Go to top" title="Go to top">↑</button>
+
+  <script src="../script.js?v=20260907-8"></script>
   <script src="with-us.js?v=20260906-2"></script>
   <script src="../celebration/klintara-celebration.js?v=20260727"></script>
 </body>

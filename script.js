@@ -19,6 +19,7 @@ const rhymeScrollButton = document.getElementById('rhymeScrollTop');
 const homeScrollButton = document.getElementById('homeScrollTop');
 const eventsScrollButton = document.getElementById('eventsScrollTop');
 const scriptsScrollButton = document.getElementById('scriptsScrollTop');
+const withusScrollButton = document.getElementById('withusScrollTop');
 const mobileInstallGate = document.getElementById('mobileInstallGate');
 const mobileInstallButton = document.getElementById('mobileInstallButton');
 const mobileInstallCopy = document.getElementById('mobileInstallCopy');
@@ -567,6 +568,10 @@ function toggleScrollTopButtons() {
   if (scriptsScrollButton) {
     scriptsScrollButton.classList.toggle('visible', shouldShow);
   }
+
+  if (withusScrollButton) {
+    withusScrollButton.classList.toggle('visible', shouldShow);
+  }
 }
 
 function scrollToPageTop() {
@@ -676,6 +681,7 @@ rhymeScrollButton?.addEventListener('click', scrollToRhymeContents);
 homeScrollButton?.addEventListener('click', scrollToPageTop);
 eventsScrollButton?.addEventListener('click', scrollToPageTop);
 scriptsScrollButton?.addEventListener('click', scrollToPageTop);
+withusScrollButton?.addEventListener('click', scrollToPageTop);
 window.addEventListener('scroll', toggleScrollTopButtons, { passive: true });
 toggleScrollTopButtons();
 
