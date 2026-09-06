@@ -157,6 +157,7 @@ a,
 button,
 .nav-btn,
 .nav-submenu-link {
+  font-family: Georgia, serif;
   font-weight: 600;
 }
 
@@ -292,7 +293,7 @@ body::after {
 
 .nav-menu-trigger {
   gap: 8px;
-  font: inherit;
+  font-family: Georgia, serif;
   font-weight: 700;
 }
 
