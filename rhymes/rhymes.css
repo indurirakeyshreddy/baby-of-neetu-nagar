@@ -65,6 +65,10 @@
   padding: 12px 0 20px;
 }
 
+.feature-section + .feature-section {
+  margin-top: 20px;
+}
+
 .feature-card {
   width: min(100%, 980px);
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -172,6 +176,11 @@
   color: #ffffff;
   line-height: 1.6;
   white-space: pre-line;
+  margin-bottom: 18px;
+}
+
+.rhyme-item:last-child {
+  margin-bottom: 0;
 }
 
 .rhyme-editorial-section {
