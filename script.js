@@ -664,7 +664,6 @@ calculateBirthdayBtn?.addEventListener('click', calculateDaysSinceBirth);
 birthDateInput?.addEventListener('change', calculateDaysSinceBirth);
 calculateDaysSinceBirth();
 
-showMobileInstallGate();
 window.addEventListener('pageshow', updateMobileInstallGate);
 
 window.addEventListener('scroll', handleScroll, { passive: true });

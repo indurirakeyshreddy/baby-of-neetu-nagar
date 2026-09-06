@@ -27,6 +27,7 @@ html {
   scroll-padding-top: 96px;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  overflow-x: hidden;
   overflow-y: scroll;
 }
 
