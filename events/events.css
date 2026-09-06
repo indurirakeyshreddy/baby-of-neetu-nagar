@@ -241,6 +241,9 @@ body {
 }
 
 .event-date sup {
+  position: relative;
+  left: -0.08em;
+  margin-left: -0.08em;
   color: var(--events-warm);
   font-size: 0.5em;
   vertical-align: super;
