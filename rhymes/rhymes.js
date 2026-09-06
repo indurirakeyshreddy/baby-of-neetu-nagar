@@ -7,9 +7,16 @@ function createRhymeElement(tagName, className, textContent) {
   return element;
 }
 
-function buildTeluguEditorialPage(pageData) {
+function buildEditorialPage(pageData, language) {
+  const languageName = language.charAt(0).toUpperCase() + language.slice(1);
+  rhymePage.classList.add('rhyme-editorial-page');
   const intro = createRhymeElement('header', 'rhyme-intro');
-  intro.append(createRhymeElement('p', 'rhyme-kicker', 'A little library of Telugu light'));
+  const kicker = createRhymeElement('p', 'rhyme-kicker');
+  kicker.append(
+    document.createTextNode('A little library of '),
+    createRhymeElement('span', 'rhyme-language-mark', `${languageName} light`)
+  );
+  intro.append(kicker);
 
   const introGrid = createRhymeElement('div', 'rhyme-intro-grid');
   const count = String(pageData.rhymes.length).padStart(2, '0');
@@ -23,7 +30,7 @@ function buildTeluguEditorialPage(pageData) {
   introGrid.append(
     introMeta,
     introTitle,
-    createRhymeElement('p', 'rhyme-intro-copy', 'A handpicked collection of Telugu rhymes for soft mornings, bright eyes, and voices growing into their own rhythm.')
+    createRhymeElement('p', 'rhyme-intro-copy', `A handpicked collection of ${languageName} rhymes for soft mornings, bright eyes, and voices growing into their own rhythm.`)
   );
   intro.append(introGrid);
 
@@ -104,8 +111,8 @@ async function loadRhymes() {
 
   rhymePage.classList.add(pageData.className);
 
-  if (language === 'telugu') {
-    buildTeluguEditorialPage(pageData);
+  if (['telugu', 'hindi', 'sanskrit'].includes(language)) {
+    buildEditorialPage(pageData, language);
     window.refreshRhymeWordCount?.();
     return;
   }

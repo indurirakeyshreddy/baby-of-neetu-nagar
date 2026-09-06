@@ -1,4 +1,4 @@
-const CACHE_NAME = 'klintara-offline-v3';
+const CACHE_NAME = 'klintara-offline-v4';
 const APP_SHELL = [
   './',
   './index.html',
@@ -72,8 +72,9 @@ self.addEventListener('fetch', (event) => {
   if (requestUrl.origin !== self.location.origin) return;
 
   if (event.request.mode === 'navigate') {
+    const networkRequest = new Request(event.request, { cache: 'no-store' });
     event.respondWith(
-      fetch(event.request)
+      fetch(networkRequest)
         .then((response) => {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));

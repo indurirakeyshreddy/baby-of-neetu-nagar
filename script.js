@@ -230,13 +230,13 @@ function showDistinctRhymeWordCount() {
   const count = getDistinctRhymeWords();
   const counter = document.createElement('div');
   counter.className = 'rhyme-word-count';
-  const teluguIntro = document.querySelector('.telugu-rhyme-page .rhyme-intro');
-  const countLabel = teluguIntro ? `${count} WORDS` : `Vocabulary Count: ${count}`;
+  const editorialIntro = document.querySelector('.rhyme-editorial-page .rhyme-intro');
+  const countLabel = editorialIntro ? `${count} WORDS` : `Vocabulary Count: ${count}`;
   counter.textContent = countLabel;
   counter.setAttribute('aria-label', countLabel);
 
-  if (teluguIntro) {
-    teluguIntro.querySelector('.rhyme-intro-meta')?.append(counter);
+  if (editorialIntro) {
+    editorialIntro.querySelector('.rhyme-intro-meta')?.append(counter);
     return;
   }
 
@@ -689,6 +689,7 @@ function registerOfflineApp() {
   if (!scriptElement) return;
 
   const serviceWorkerUrl = new URL('sw.js', scriptElement.src);
+  serviceWorkerUrl.search = 'v=20260907-4';
   navigator.serviceWorker.register(serviceWorkerUrl, { scope: serviceWorkerUrl.pathname.replace(/sw\.js$/, '') })
     .catch(() => {
       // Offline support is progressive enhancement; the site remains usable without it.
