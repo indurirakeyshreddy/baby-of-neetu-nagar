@@ -82,11 +82,28 @@ function getCelebrationMilestoneState(parts = {}) {
   };
 }
 
+function getOrdinalSuffix(value) {
+  const remainder100 = value % 100;
+  if (remainder100 >= 11 && remainder100 <= 13) return 'th';
+
+  switch (value % 10) {
+    case 1:
+      return 'st';
+    case 2:
+      return 'nd';
+    case 3:
+      return 'rd';
+    default:
+      return 'th';
+  }
+}
+
 function getCelebrationMilestoneLabel(parts = {}) {
   const state = getCelebrationMilestoneState(parts);
 
   if (state.unit === 'month') {
-    return `Month&nbsp;${state.count}<br><span style="font-family: 'Poppins', sans-serif; font-size: 1em; font-weight: 900; color: #3a9b5c; letter-spacing: 0.12em; text-shadow: 0 2px 8px rgba(58, 155, 92, 0.4); text-transform: uppercase;">Is On</span>`;
+    const ordinalMonth = `${state.count}${getOrdinalSuffix(state.count)}`;
+    return `Into The<br>${ordinalMonth} Month`;
   }
 
   const unitLabel = state.count === 1 ? 'Year' : 'Years';

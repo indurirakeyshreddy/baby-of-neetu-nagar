@@ -18,7 +18,7 @@
   color: var(--muted);
   font-size: 1.02rem;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .withus-timer {
@@ -91,14 +91,14 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.96);
   color: #1565c0;
-  font-size: clamp(0.68rem, 0.8vw, 0.8rem);
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: clamp(0.56rem, 0.7vw, 0.7rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: none;
   text-align: center;
   text-shadow: 0 2px 6px rgba(21, 101, 192, 0.3);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
-  white-space: normal;
+  white-space: nowrap;
   pointer-events: none;
 }
 
