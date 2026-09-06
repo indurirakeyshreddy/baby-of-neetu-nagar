@@ -29,7 +29,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="assets/favicon.svg" />
 
-  <link rel="stylesheet" href="shared/base.css" />
+  <link rel="stylesheet" href="shared/base.css?v=20260906-28" />
   <link rel="stylesheet" href="shared/components.css" />
   <link rel="stylesheet" href="shared/home.css?v=20260823-24" />
   <link rel="stylesheet" href="celebration/klintara-celebration.css?v=20260823-4" />
@@ -52,7 +52,14 @@
 
   <div class="top-nav" aria-label="Page navigation">
     <a class="nav-btn active" href="index.html" data-target="home">Home</a>
-    <a class="nav-btn" href="rhymes/telugu-rhymes.html" data-target="rhymes">Rhymes</a>
+    <div class="nav-menu-item nav-menu-item-rhymes">
+      <button class="nav-btn nav-menu-trigger" type="button" aria-haspopup="true" aria-expanded="false">Rhymes <span class="nav-menu-mark" aria-hidden="true">+</span></button>
+      <div class="nav-submenu" role="menu" aria-label="Rhymes pages">
+        <a class="nav-submenu-link" href="rhymes/telugu-rhymes.html" data-target="rhymes" role="menuitem">Telugu Rhymes</a>
+        <a class="nav-submenu-link" href="rhymes/hindi-rhymes.html" data-target="hindi-rhymes" role="menuitem">Hindi Rhymes</a>
+        <a class="nav-submenu-link" href="rhymes/sanskrit-rhymes.html" data-target="sanskrit-rhymes" role="menuitem">Sanskrit Rhymes</a>
+      </div>
+    </div>
     <a class="nav-btn" href="scripts/scripts.html" data-target="scripts">Scripts</a>
     <a class="nav-btn" href="events/events.html" data-target="events">Events</a>
     <a class="nav-btn" id="withUsNavBtn" href="withus/with-us.html" data-target="with-us" aria-disabled="true">WithUs</a>
@@ -199,7 +206,7 @@
 
   <button class="scroll-top-btn" id="homeScrollTop" type="button" aria-label="Go to top" title="Go to top">↑</button>
 
-  <script src="script.js?v=20260823-7"></script>
+  <script src="script.js?v=20260906-29"></script>
   <script src="celebration/klintara-celebration.js?v=20260823-4"></script>
 
 </body>

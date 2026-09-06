@@ -10,6 +10,8 @@ const revealButton = document.getElementById('revealButton');
 const audioToggleBtn = document.getElementById('audioToggleBtn');
 const revealAudio = document.getElementById('revealAudio');
 const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
+const rhymeMenu = document.querySelector('.nav-menu-item-rhymes');
+const rhymeMenuTrigger = rhymeMenu?.querySelector('.nav-menu-trigger');
 const birthDateInput = document.getElementById('birthDateInput');
 const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
 const birthdayResult = document.getElementById('birthdayResult');
@@ -130,6 +132,20 @@ function bindNavigation() {
       window.location.href = href;
     });
   });
+
+  if (rhymeMenu && rhymeMenuTrigger) {
+    rhymeMenuTrigger.addEventListener('click', () => {
+      const isOpen = rhymeMenu.classList.toggle('is-open');
+      rhymeMenuTrigger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!rhymeMenu.contains(event.target)) {
+        rhymeMenu.classList.remove('is-open');
+        rhymeMenuTrigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 }
 
 function getDistinctRhymeWords() {
@@ -343,6 +359,7 @@ function completeReveal() {
   }
   storySection?.classList.remove('hidden');
   storySection?.classList.add('visible');
+  observeFullNameReveal();
   writeRevealState();
   updateWithUsButtonState();
   startRevealAudio();
@@ -376,6 +393,19 @@ function revealFullName() {
   requestAnimationFrame(() => {
     fullNameReveal.classList.add('reveal-complete');
   });
+}
+
+function observeFullNameReveal() {
+  if (!finalReveal || !isComplete || fullNameRevealed || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) {
+      revealFullName();
+      observer.disconnect();
+    }
+  }, { rootMargin: '0px 0px 180px' });
+
+  observer.observe(finalReveal);
 }
 
 function handleScroll() {
@@ -472,6 +502,14 @@ if (isComplete) {
   storySection?.classList.add('visible');
 }
 
+if (fullNameRevealed) {
+  finalReveal?.classList.remove('hidden');
+  finalReveal?.classList.add('visible');
+  fullNameReveal?.classList.add('reveal-complete');
+}
+
+observeFullNameReveal();
+
 revealButton?.addEventListener('click', (event) => {
   if (isComplete) return;
   triggerButtonBurst(event);
@@ -539,6 +577,7 @@ birthDateInput?.addEventListener('change', calculateDaysSinceBirth);
 calculateDaysSinceBirth();
 
 document.addEventListener('scroll', handleScroll, { passive: true });
+window.addEventListener('resize', handleScroll, { passive: true });
 
 function registerOfflineApp() {
   if (!('serviceWorker' in navigator)) return;
