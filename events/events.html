@@ -26,7 +26,14 @@
 
   <nav class="top-nav" aria-label="Page navigation">
     <a class="nav-btn" href="../index.html" data-target="home">Home</a>
-    <a class="nav-btn" href="../rhymes/telugu-rhymes.html" data-target="rhymes">Rhymes</a>
+    <div class="nav-menu-item nav-menu-item-rhymes">
+      <button class="nav-btn nav-menu-trigger" type="button" aria-haspopup="true" aria-expanded="false">Rhymes <span class="nav-menu-mark" aria-hidden="true">+</span></button>
+      <div class="nav-submenu" role="menu" aria-label="Rhymes pages">
+        <a class="nav-submenu-link" href="../rhymes/telugu-rhymes.html" data-target="rhymes" role="menuitem">Telugu Rhymes</a>
+        <a class="nav-submenu-link" href="../rhymes/hindi-rhymes.html" data-target="hindi-rhymes" role="menuitem">Hindi Rhymes</a>
+        <a class="nav-submenu-link" href="../rhymes/sanskrit-rhymes.html" data-target="sanskrit-rhymes" role="menuitem">Sanskrit Rhymes</a>
+      </div>
+    </div>
     <a class="nav-btn" href="../scripts/scripts.html" data-target="scripts">Scripts</a>
     <a class="nav-btn active" href="events.html" data-target="events">Events</a>
     <a class="nav-btn" href="../withus/with-us.html" data-target="with-us">WithUs</a>
