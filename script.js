@@ -18,6 +18,7 @@ const birthdayResult = document.getElementById('birthdayResult');
 const rhymeScrollButton = document.getElementById('rhymeScrollTop');
 const homeScrollButton = document.getElementById('homeScrollTop');
 const eventsScrollButton = document.getElementById('eventsScrollTop');
+const scriptsScrollButton = document.getElementById('scriptsScrollTop');
 const mobileInstallGate = document.getElementById('mobileInstallGate');
 const mobileInstallButton = document.getElementById('mobileInstallButton');
 const mobileInstallCopy = document.getElementById('mobileInstallCopy');
@@ -562,6 +563,10 @@ function toggleScrollTopButtons() {
   if (eventsScrollButton) {
     eventsScrollButton.classList.toggle('visible', shouldShow);
   }
+
+  if (scriptsScrollButton) {
+    scriptsScrollButton.classList.toggle('visible', shouldShow);
+  }
 }
 
 function scrollToPageTop() {
@@ -670,6 +675,7 @@ if (document.querySelector('[data-rhyme-language]')) {
 rhymeScrollButton?.addEventListener('click', scrollToRhymeContents);
 homeScrollButton?.addEventListener('click', scrollToPageTop);
 eventsScrollButton?.addEventListener('click', scrollToPageTop);
+scriptsScrollButton?.addEventListener('click', scrollToPageTop);
 window.addEventListener('scroll', toggleScrollTopButtons, { passive: true });
 toggleScrollTopButtons();
 
@@ -689,7 +695,7 @@ function registerOfflineApp() {
   if (!scriptElement) return;
 
   const serviceWorkerUrl = new URL('sw.js', scriptElement.src);
-  serviceWorkerUrl.search = 'v=20260907-4';
+  serviceWorkerUrl.search = 'v=20260907-5';
   navigator.serviceWorker.register(serviceWorkerUrl, { scope: serviceWorkerUrl.pathname.replace(/sw\.js$/, '') })
     .catch(() => {
       // Offline support is progressive enhancement; the site remains usable without it.
