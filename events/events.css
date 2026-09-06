@@ -298,11 +298,13 @@ body {
 
 .note-block {
   grid-column: 2;
-  display: grid;
-  grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.5fr);
-  gap: clamp(20px, 4vw, 68px);
+  display: block;
   max-width: 760px;
-  align-items: start;
+}
+
+.note-block p:last-child {
+  max-width: 620px;
+  margin-top: 14px;
 }
 
 .note-block + .note-block {
