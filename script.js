@@ -80,6 +80,7 @@ function getCurrentPageName() {
     'hindirhymes.html': 'hindi-rhymes',
     'sanskrithymes.html': 'sanskrit-rhymes',
     'birthday.html': 'birthday',
+    'events.html': 'events',
     'with-us.html': 'with-us',
     'with-us': 'with-us'
   };
@@ -102,7 +103,7 @@ function updateWithUsButtonState() {
   const isHomePage = window.location.pathname.split('/').pop() === 'index.html' || window.location.pathname === '/';
   const shouldLock = isHomePage && !isComplete;
   const currentPath = window.location.pathname;
-  const isInSubfolder = currentPath.includes('/rhymes/') || currentPath.includes('/scripts/') || currentPath.includes('/withus/');
+  const isInSubfolder = currentPath.includes('/rhymes/') || currentPath.includes('/scripts/') || currentPath.includes('/events/') || currentPath.includes('/withus/');
   const withUsHref = isInSubfolder ? '../withus/with-us.html' : 'withus/with-us.html';
 
   withUsButton.classList.toggle('locked', shouldLock);

@@ -34,6 +34,8 @@ const APP_SHELL = [
   './withus/with-us.html',
   './withus/withus.css',
   './withus/with-us.js',
+  './events/events.html',
+  './events/events.css',
   './script.js',
   './shared/base.css',
   './shared/components.css',
