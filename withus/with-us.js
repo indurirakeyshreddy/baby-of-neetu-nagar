@@ -4,6 +4,7 @@ const monthsValue = document.getElementById('monthsValue');
 const daysValue = document.getElementById('daysValue');
 const withUsMessage = document.getElementById('withUsMessage');
 const counterCards = Array.from(document.querySelectorAll('.withus-counter-card'));
+const withUsTimer = document.getElementById('withUsTimer');
 const celebrationContainer = document.getElementById('klintaraCelebration');
 
 let milestoneCelebrationShown = false;
@@ -11,6 +12,7 @@ let initialCounterAnimationComplete = false;
 let initialAnimationTimer = null;
 let lastCelebratedMonthMilestone = 0;
 let lastCelebratedUnit = null;
+let countersAreVisible = false;
 
 function getAnniversaryDate(completedMonths) {
   const anniversary = new Date(startDate);
@@ -208,39 +210,68 @@ function showMilestoneCelebration(parts = {}) {
   }, fadeDelay);
 }
 
-function animateCounter(element, targetValue, duration = 1400) {
+function animateCounter(element, targetValue, duration = 1800) {
   if (!element) return;
 
-  const startValue = Number(element.textContent.replace(/\D/g, '')) || 0;
-  const range = targetValue - startValue;
-  const startTime = performance.now();
   const minDigits = element.id === 'yearsValue' ? 3 : 2;
+  const targetText = String(targetValue).padStart(minDigits, '0');
+  if (element.dataset.targetValue === targetText) return;
 
-  function frame(currentTime) {
+  window.clearInterval(element.rollInterval);
+  window.clearTimeout(element.rollTimeout);
+  window.cancelAnimationFrame(element.rollFrame);
+  element.dataset.targetValue = targetText;
+  element.classList.add('is-rolling');
+
+  const startTime = performance.now();
+  const frame = (currentTime) => {
     const progress = Math.min((currentTime - startTime) / duration, 1);
     const eased = 1 - Math.pow(1 - progress, 3);
-    const currentValue = Math.round(startValue + range * eased);
+    const currentValue = Math.round(targetValue * eased);
     element.textContent = String(currentValue).padStart(minDigits, '0');
 
     if (progress < 1) {
-      requestAnimationFrame(frame);
+      element.rollFrame = window.requestAnimationFrame(frame);
+      return;
     }
-  }
 
-  requestAnimationFrame(frame);
+    element.textContent = targetText;
+    element.classList.remove('is-rolling');
+  };
+
+  element.rollFrame = window.requestAnimationFrame(frame);
+}
+
+function setCounterValue(element, targetValue) {
+  if (!element) return;
+
+  const minDigits = element.id === 'yearsValue' ? 3 : 2;
+  const targetText = String(targetValue).padStart(minDigits, '0');
+  window.clearInterval(element.rollInterval);
+  window.clearTimeout(element.rollTimeout);
+  window.cancelAnimationFrame(element.rollFrame);
+  element.dataset.targetValue = targetText;
+  element.textContent = targetText;
+  element.classList.remove('is-rolling');
 }
 
 function updateWithUsClock() {
   const parts = getTimeParts();
 
-  if (yearsValue) {
+  if (countersAreVisible && yearsValue) {
     animateCounter(yearsValue, parts.years);
+  } else if (yearsValue) {
+    setCounterValue(yearsValue, parts.years);
   }
-  if (monthsValue) {
+  if (countersAreVisible && monthsValue) {
     animateCounter(monthsValue, parts.months);
+  } else if (monthsValue) {
+    setCounterValue(monthsValue, parts.months);
   }
-  if (daysValue) {
+  if (countersAreVisible && daysValue) {
     animateCounter(daysValue, parts.days);
+  } else if (daysValue) {
+    setCounterValue(daysValue, parts.days);
   }
 
   if (withUsMessage) {
@@ -266,8 +297,36 @@ function updateWithUsClock() {
   }
 }
 
+function observeWithUsTimer() {
+  if (!withUsTimer || !('IntersectionObserver' in window)) {
+    countersAreVisible = true;
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    const entry = entries[0];
+    if (!entry) return;
+
+    if (!entry.isIntersecting) {
+      countersAreVisible = false;
+      return;
+    }
+
+    if (countersAreVisible) return;
+
+    countersAreVisible = true;
+    [yearsValue, monthsValue, daysValue].forEach((element) => {
+      if (element) element.dataset.targetValue = '';
+    });
+    updateWithUsClock();
+  }, { threshold: 0.35 });
+
+  observer.observe(withUsTimer);
+}
+
 
 window.showMilestoneCelebration = showMilestoneCelebration;
+observeWithUsTimer();
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
