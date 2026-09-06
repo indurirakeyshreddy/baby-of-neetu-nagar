@@ -1,5 +1,89 @@
 const rhymePage = document.querySelector('[data-rhyme-language]');
 
+function createRhymeElement(tagName, className, textContent) {
+  const element = document.createElement(tagName);
+  element.className = className;
+  if (textContent) element.textContent = textContent;
+  return element;
+}
+
+function buildTeluguEditorialPage(pageData) {
+  const intro = createRhymeElement('header', 'rhyme-intro');
+  intro.append(createRhymeElement('p', 'rhyme-kicker', 'A little library of Telugu light'));
+
+  const introGrid = createRhymeElement('div', 'rhyme-intro-grid');
+  const count = String(pageData.rhymes.length).padStart(2, '0');
+  const introMeta = createRhymeElement('div', 'rhyme-intro-meta');
+  introMeta.append(createRhymeElement('span', 'rhyme-intro-index', `${count} Rhymes`));
+  const introTitle = createRhymeElement('h1', 'rhyme-intro-title');
+  introTitle.append(
+    document.createTextNode('Songs for little'),
+    createRhymeElement('em', '', 'Klintara')
+  );
+  introGrid.append(
+    introMeta,
+    introTitle,
+    createRhymeElement('p', 'rhyme-intro-copy', 'A handpicked collection of Telugu rhymes for soft mornings, bright eyes, and voices growing into their own rhythm.')
+  );
+  intro.append(introGrid);
+
+  const directory = createRhymeElement('section', 'rhyme-directory');
+  directory.setAttribute('aria-labelledby', 'rhymeDirectoryTitle');
+  const directoryHeading = createRhymeElement('div', 'rhyme-directory-heading');
+  directoryHeading.append(
+    createRhymeElement('p', 'rhyme-detail-label', 'Choose a rhyme'),
+    createRhymeElement('span', 'rhyme-directory-count', `01 / ${count}`)
+  );
+  directoryHeading.firstChild.id = 'rhymeDirectoryTitle';
+  const directoryGrid = createRhymeElement('div', 'rhyme-directory-grid');
+  const toc = createRhymeElement('div', 'table-of-contents');
+
+  pageData.rhymes.forEach((rhyme, index) => {
+    const link = createRhymeElement('a', 'rhyme-directory-card', '');
+    link.href = `#${rhyme.id}`;
+    link.append(
+      createRhymeElement('span', 'rhyme-card-number', String(index + 1).padStart(2, '0')),
+      createRhymeElement('strong', 'rhyme-card-title', rhyme.title),
+      createRhymeElement('span', 'rhyme-card-action', 'Read rhyme +')
+    );
+    directoryGrid.append(link);
+
+    const tocLink = createRhymeElement('a', '', rhyme.title);
+    tocLink.href = `#${rhyme.id}`;
+    toc.append(tocLink);
+  });
+
+  directory.append(directoryHeading, directoryGrid);
+  rhymePage.append(intro, directory, toc);
+
+  pageData.rhymes.forEach((rhyme, index) => {
+    const section = createRhymeElement('section', 'rhyme-entry');
+    section.id = rhyme.id;
+    section.setAttribute('aria-labelledby', `${rhyme.id}-title`);
+
+    const feature = createRhymeElement('article', 'rhyme-feature');
+    const identity = createRhymeElement('div', 'rhyme-identity');
+    identity.append(
+      createRhymeElement('div', 'rhyme-number', String(index + 1).padStart(2, '0'))
+    );
+
+    const titleBlock = createRhymeElement('div', 'rhyme-title-block');
+    titleBlock.append(
+      createRhymeElement('h2', '', rhyme.title)
+    );
+    titleBlock.lastChild.id = `${rhyme.id}-title`;
+
+    const lyrics = createRhymeElement('div', 'rhyme-lyrics');
+    lyrics.append(
+      createRhymeElement('p', '', rhyme.text)
+    );
+
+    feature.append(identity, titleBlock, lyrics);
+    section.append(createRhymeElement('div', 'rhyme-grid-rule'), feature);
+    rhymePage.append(section);
+  });
+}
+
 async function loadRhymes() {
   if (!rhymePage) return;
 
@@ -19,6 +103,13 @@ async function loadRhymes() {
   document.querySelector('meta[name="description"]')?.setAttribute('content', pageData.pageDescription);
 
   rhymePage.classList.add(pageData.className);
+
+  if (language === 'telugu') {
+    buildTeluguEditorialPage(pageData);
+    window.refreshRhymeWordCount?.();
+    return;
+  }
+
   const toc = document.createElement('div');
   toc.className = 'table-of-contents';
 

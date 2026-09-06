@@ -205,7 +205,7 @@ function bindNavigation() {
 }
 
 function getDistinctRhymeWords() {
-  const rhymeItems = Array.from(document.querySelectorAll('.rhyme-item'));
+  const rhymeItems = Array.from(document.querySelectorAll('.rhyme-item, .rhyme-lyrics > p:last-child'));
   if (!rhymeItems.length) return 0;
 
   const allText = rhymeItems.map((item) => item.textContent).join(' ');
@@ -230,8 +230,15 @@ function showDistinctRhymeWordCount() {
   const count = getDistinctRhymeWords();
   const counter = document.createElement('div');
   counter.className = 'rhyme-word-count';
-  counter.textContent = `Vocabulary Count: ${count}`;
-  counter.setAttribute('aria-label', `Vocabulary Count: ${count}`);
+  const teluguIntro = document.querySelector('.telugu-rhyme-page .rhyme-intro');
+  const countLabel = teluguIntro ? `${count} WORDS` : `Vocabulary Count: ${count}`;
+  counter.textContent = countLabel;
+  counter.setAttribute('aria-label', countLabel);
+
+  if (teluguIntro) {
+    teluguIntro.querySelector('.rhyme-intro-meta')?.append(counter);
+    return;
+  }
 
   const toc = document.querySelector('.table-of-contents');
   if (toc?.parentNode) {
