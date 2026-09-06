@@ -1,7 +1,8 @@
-const CACHE_NAME = 'klintara-offline-v1';
+const CACHE_NAME = 'klintara-offline-v2';
 const APP_SHELL = [
   './',
   './index.html',
+  './manifest.webmanifest',
   './404.html',
   './scripts/scripts.html',
   './scripts/scripts.css',

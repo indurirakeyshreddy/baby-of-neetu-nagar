@@ -17,6 +17,10 @@ const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
 const birthdayResult = document.getElementById('birthdayResult');
 const rhymeScrollButton = document.getElementById('rhymeScrollTop');
 const homeScrollButton = document.getElementById('homeScrollTop');
+const mobileInstallGate = document.getElementById('mobileInstallGate');
+const mobileInstallButton = document.getElementById('mobileInstallButton');
+const mobileInstallCopy = document.getElementById('mobileInstallCopy');
+const mobileInstallHelp = document.getElementById('mobileInstallHelp');
 
 const nameLetters = ['K', 'L', 'I', 'N', 'T', 'A', 'R', 'A'];
 const optionSets = [
@@ -35,10 +39,60 @@ let isComplete = false;
 let fullNameRevealed = false;
 let revealAudioStarted = false;
 let finalNameInView = false;
+let deferredInstallPrompt = null;
 
 const revealStateKey = 'klintaraRevealState';
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+function isStandaloneApp() {
+  return window.navigator.standalone === true
+    || window.matchMedia('(display-mode: standalone)').matches
+    || window.matchMedia('(display-mode: window-controls-overlay)').matches;
+}
+
+function isMobileInstallRequired() {
+  return window.matchMedia('(max-width: 768px)').matches && !isStandaloneApp();
+}
+
+function showMobileInstallGate() {
+  if (!mobileInstallGate || !isMobileInstallRequired()) return;
+
+  mobileInstallGate.hidden = false;
+  document.body.classList.add('mobile-install-required');
+
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (isIos) {
+    mobileInstallCopy.textContent = 'In Safari, tap Share, choose Add to Home Screen, then open Klintara from your Home Screen.';
+    mobileInstallButton.hidden = true;
+    mobileInstallHelp.textContent = 'The website stays locked until it is opened from the installed app.';
+  } else {
+    mobileInstallHelp.textContent = 'Choose Install app in the browser prompt. If no prompt appears, open the browser menu and choose Install app or Add to home screen.';
+  }
+}
+
+function updateMobileInstallGate() {
+  if (!mobileInstallGate || !isStandaloneApp()) return;
+
+  mobileInstallGate.hidden = true;
+  document.body.classList.remove('mobile-install-required');
+}
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  if (mobileInstallButton) mobileInstallButton.hidden = false;
+});
+
+mobileInstallButton?.addEventListener('click', async () => {
+  if (!deferredInstallPrompt) return;
+
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+});
+
+window.addEventListener('appinstalled', updateMobileInstallGate);
 
 function readRevealState() {
   try {
@@ -609,6 +663,9 @@ toggleScrollTopButtons();
 calculateBirthdayBtn?.addEventListener('click', calculateDaysSinceBirth);
 birthDateInput?.addEventListener('change', calculateDaysSinceBirth);
 calculateDaysSinceBirth();
+
+showMobileInstallGate();
+window.addEventListener('pageshow', updateMobileInstallGate);
 
 window.addEventListener('scroll', handleScroll, { passive: true });
 window.addEventListener('resize', handleScroll, { passive: true });

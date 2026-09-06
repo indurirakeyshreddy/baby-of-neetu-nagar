@@ -5,6 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BABY-OF-NEETU-NAGAR</title>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Klintara" />
 
   <meta name="description" content="An immersive family experience with a special name waiting to be revealed." />
   <meta name="author" content="BABY-OF-NEETU-NAGAR" />
@@ -29,13 +33,21 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="assets/favicon.svg" />
 
-  <link rel="stylesheet" href="shared/base.css?v=20260906-28" />
+  <link rel="stylesheet" href="shared/base.css?v=20260906-29" />
   <link rel="stylesheet" href="shared/components.css" />
   <link rel="stylesheet" href="shared/home.css?v=20260906-31" />
   <link rel="stylesheet" href="celebration/klintara-celebration.css?v=20260823-4" />
 </head>
 
 <body>
+
+  <section class="mobile-install-gate" id="mobileInstallGate" hidden role="dialog" aria-modal="true" aria-labelledby="mobileInstallTitle">
+    <div class="mobile-install-mark" aria-hidden="true">*</div>
+    <h1 id="mobileInstallTitle">Install the app<br /><em>to enter.</em></h1>
+    <p class="mobile-install-copy" id="mobileInstallCopy">Add BABY-OF-NEETU-NAGAR to your Home Screen for the full family experience.</p>
+    <button class="mobile-install-button" id="mobileInstallButton" type="button" hidden>Install app</button>
+    <p class="mobile-install-help" id="mobileInstallHelp"></p>
+  </section>
 
   <!-- Existing Background -->
   <div class="background-layer" aria-hidden="true">
@@ -206,7 +218,7 @@
 
   <button class="scroll-top-btn" id="homeScrollTop" type="button" aria-label="Go to top" title="Go to top">↑</button>
 
-  <script src="script.js?v=20260906-31"></script>
+  <script src="script.js?v=20260906-33"></script>
   <script src="celebration/klintara-celebration.js?v=20260823-4"></script>
 
 </body>

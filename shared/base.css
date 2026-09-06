@@ -47,6 +47,98 @@ body {
   padding-bottom: calc(24px + env(safe-area-inset-bottom));
 }
 
+body.mobile-install-required {
+  overflow: hidden;
+}
+
+.mobile-install-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--text);
+  background: radial-gradient(circle at 50% 20%, rgba(255, 231, 166, 0.16), transparent 28%), linear-gradient(160deg, #091220, #050816 70%);
+}
+
+.mobile-install-gate[hidden] {
+  display: none;
+}
+
+.mobile-install-mark {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 1px solid rgba(255, 231, 166, 0.45);
+  border-radius: 18px;
+  color: var(--accent);
+  font-size: 1.8rem;
+  box-shadow: 0 0 34px rgba(255, 231, 166, 0.16);
+}
+
+.mobile-install-kicker {
+  margin: 4px 0 0;
+  color: var(--accent);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.mobile-install-gate h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 11vw, 3.6rem);
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+.mobile-install-gate h1 em {
+  color: var(--accent);
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+
+.mobile-install-copy,
+.mobile-install-help {
+  max-width: 330px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.mobile-install-help {
+  color: rgba(216, 204, 177, 0.72);
+  font-size: 0.76rem;
+}
+
+.mobile-install-button {
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 12px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  color: #111426;
+  background: var(--accent);
+  cursor: pointer;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 769px) {
+  .mobile-install-gate {
+    display: none !important;
+  }
+}
+
 main,
 .page-shell,
 section {
