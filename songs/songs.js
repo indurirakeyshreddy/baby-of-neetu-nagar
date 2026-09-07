@@ -43,7 +43,8 @@ async function loadSongs() {
   const introMeta = createSongElement('div', 'rhyme-intro-meta', '');
   introMeta.append(createSongElement('span', 'rhyme-intro-index', `${String(songs.length).padStart(2, '0')} Songs`));
   const introTitle = createSongElement('h1', 'rhyme-intro-title', '');
-  introTitle.append(document.createTextNode(`${indexData.languageName} songs for little`), createSongElement('em', '', 'Klintara'));
+  const introTitleLead = createSongElement('span', 'songs-intro-title-lead', `${indexData.languageName} songs for little`);
+  introTitle.append(introTitleLead, createSongElement('em', '', 'Klintara'));
   introGrid.append(
     introMeta,
     introTitle,

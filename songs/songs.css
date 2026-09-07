@@ -116,8 +116,28 @@
   white-space: normal;
 }
 
+.songs-shell.tamil-text .rhyme-intro-title .songs-intro-title-lead {
+  display: block;
+  white-space: nowrap;
+}
+
 .songs-shell.tamil-text .rhyme-intro-title em {
   display: block;
+}
+
+@media (max-width: 700px) {
+  .songs-shell .rhyme-intro-title {
+    white-space: normal;
+  }
+
+  .songs-shell .rhyme-intro-title .songs-intro-title-lead,
+  .songs-shell .rhyme-intro-title em {
+    display: block;
+  }
+
+  .songs-shell .rhyme-intro-title em {
+    margin-top: 0.2em;
+  }
 }
 
 .songs-scroll-top {
