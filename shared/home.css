@@ -605,8 +605,8 @@
   flex-wrap: nowrap;
   gap: 0.08em;
   font-size: clamp(1.3rem, 4.4vw, 3rem);
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  font-weight: 700;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
   letter-spacing: 0.12em;
   margin: 10px 0 18px;
   line-height: 1.1;
