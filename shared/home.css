@@ -748,6 +748,13 @@
   background: linear-gradient(135deg, rgba(255, 211, 111, 0.14), rgba(10, 16, 33, 0.9));
 }
 
+.essence-line {
+  text-decoration: underline;
+  text-decoration-color: #f5c779;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .blessing-card {
   background: linear-gradient(135deg, rgba(143, 158, 255, 0.16), rgba(10, 16, 33, 0.9));
 }
