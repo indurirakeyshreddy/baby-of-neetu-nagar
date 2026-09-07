@@ -1,5 +1,11 @@
 const songsPage = document.querySelector('[data-song-language]');
 const songsScrollTop = document.getElementById('songsScrollTop');
+const availableAudioSongs = new Set([
+  'aura-ammaka-chella',
+  'vidhatha-talapuna',
+  'orey-aanjaneyulu'
+]);
+let activeSongAudio = null;
 
 function updateSongsScrollButton() {
   songsScrollTop?.classList.toggle('visible', window.scrollY > 360);
@@ -16,6 +22,49 @@ function createSongElement(tagName, className, textContent) {
   element.className = className;
   element.textContent = textContent;
   return element;
+}
+
+function addSongAudioControl(feature, song, language) {
+  if (language !== 'telugu' || !availableAudioSongs.has(song.id)) return;
+
+  const audio = document.createElement('audio');
+  audio.className = 'songs-audio';
+  audio.preload = 'none';
+  audio.src = `${language}/audio/${song.id}.mp3`;
+  audio.setAttribute('aria-hidden', 'true');
+
+  const button = createSongElement('button', 'songs-audio-control', '🔊');
+  button.type = 'button';
+  button.setAttribute('aria-label', `Play ${song.title}`);
+  button.title = `Play ${song.title}`;
+
+  const updateButton = () => {
+    const isPlaying = !audio.paused;
+    button.textContent = isPlaying ? '🔊' : '🔈';
+    button.setAttribute('aria-label', `${isPlaying ? 'Pause' : 'Play'} ${song.title}`);
+    button.title = `${isPlaying ? 'Pause' : 'Play'} ${song.title}`;
+    button.classList.toggle('is-playing', isPlaying);
+  };
+
+  button.addEventListener('click', () => {
+    if (!audio.paused) {
+      audio.pause();
+      return;
+    }
+
+    if (activeSongAudio && activeSongAudio !== audio) activeSongAudio.pause();
+    activeSongAudio = audio;
+    audio.play().catch(() => updateButton());
+  });
+
+  audio.addEventListener('play', updateButton);
+  audio.addEventListener('pause', updateButton);
+  audio.addEventListener('ended', () => {
+    activeSongAudio = null;
+    updateButton();
+  });
+
+  feature.append(button, audio);
 }
 
 async function loadSongs() {
@@ -81,6 +130,7 @@ async function loadSongs() {
     const lyrics = createSongElement('div', 'rhyme-lyrics', '');
     lyrics.append(createSongElement('p', '', song.text));
     feature.append(identity, titleBlock, lyrics);
+    addSongAudioControl(feature, song, language);
     entry.append(createSongElement('div', 'rhyme-grid-rule', ''), feature);
     library.append(entry);
   });
