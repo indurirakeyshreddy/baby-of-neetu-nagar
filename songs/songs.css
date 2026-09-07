@@ -103,41 +103,19 @@
 }
 
 .songs-shell .rhyme-intro-title {
-  white-space: nowrap;
+  white-space: normal;
   font-size: clamp(1rem, 5.5vw, 4.8rem);
   letter-spacing: -0.04em;
 }
 
-.songs-shell .rhyme-intro-title em {
-  display: inline;
-}
-
-.songs-shell.tamil-text .rhyme-intro-title {
-  white-space: normal;
-}
-
-.songs-shell.tamil-text .rhyme-intro-title .songs-intro-title-lead {
+.songs-shell .rhyme-intro-title .songs-intro-title-lead {
   display: block;
   white-space: nowrap;
 }
 
-.songs-shell.tamil-text .rhyme-intro-title em {
+.songs-shell .rhyme-intro-title em {
   display: block;
-}
-
-@media (max-width: 700px) {
-  .songs-shell .rhyme-intro-title {
-    white-space: normal;
-  }
-
-  .songs-shell .rhyme-intro-title .songs-intro-title-lead,
-  .songs-shell .rhyme-intro-title em {
-    display: block;
-  }
-
-  .songs-shell .rhyme-intro-title em {
-    margin-top: 0.2em;
-  }
+  margin-top: 0.2em;
 }
 
 .songs-scroll-top {
