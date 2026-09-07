@@ -171,6 +171,11 @@ body {
   color: var(--text);
 }
 
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -358,7 +363,8 @@ body::after {
 .nav-submenu-link:focus-visible {
   color: #111426;
   background: var(--accent);
-  outline: none;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .nav-submenu-link.active {
