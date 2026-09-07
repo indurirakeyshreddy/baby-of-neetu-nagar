@@ -24,7 +24,7 @@ function buildEditorialPage(pageData, language) {
   introMeta.append(createRhymeElement('span', 'rhyme-intro-index', `${count} Rhymes`));
   const introTitle = createRhymeElement('h1', 'rhyme-intro-title');
   introTitle.append(
-    document.createTextNode('Songs for little'),
+    document.createTextNode('Rhymes for little'),
     createRhymeElement('em', '', 'Klintara')
   );
   introGrid.append(
