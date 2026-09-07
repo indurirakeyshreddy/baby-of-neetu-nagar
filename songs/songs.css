@@ -84,3 +84,37 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.songs-scroll-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #f7f1e5;
+  background: linear-gradient(135deg, rgba(245, 199, 121, 0.2), rgba(13, 17, 32, 0.9));
+  font-size: 1.4rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.songs-scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.songs-scroll-top:hover,
+.songs-scroll-top:focus-visible {
+  border-color: #f5c779;
+  outline: none;
+  transform: translateY(-2px);
+}

@@ -1,4 +1,15 @@
 const songsPage = document.querySelector('[data-song-language]');
+const songsScrollTop = document.getElementById('songsScrollTop');
+
+function updateSongsScrollButton() {
+  songsScrollTop?.classList.toggle('visible', window.scrollY > 360);
+}
+
+songsScrollTop?.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+window.addEventListener('scroll', updateSongsScrollButton, { passive: true });
+updateSongsScrollButton();
 
 function createSongElement(tagName, className, textContent) {
   const element = document.createElement(tagName);
@@ -11,11 +22,12 @@ async function loadSongs() {
   if (!songsPage) return;
 
   const language = songsPage.dataset.songLanguage;
-  const indexResponse = await fetch(`${language}/index.json`);
+  const dataVersion = '20260907-5';
+  const indexResponse = await fetch(`${language}/index.json?v=${dataVersion}`);
   if (!indexResponse.ok) throw new Error(`Unable to load ${language} songs index: ${indexResponse.status}`);
 
   const indexData = await indexResponse.json();
-  const songResponses = await Promise.all(indexData.songs.map((fileName) => fetch(`${language}/${fileName}`)));
+  const songResponses = await Promise.all(indexData.songs.map((fileName) => fetch(`${language}/${fileName}?v=${dataVersion}`)));
   const failedResponse = songResponses.find((response) => !response.ok);
   if (failedResponse) throw new Error(`Unable to load a ${language} song: ${failedResponse.status}`);
 
