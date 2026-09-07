@@ -22,7 +22,7 @@ async function loadSongs() {
   if (!songsPage) return;
 
   const language = songsPage.dataset.songLanguage;
-  const dataVersion = '20260907-5';
+  const dataVersion = '20260907-6';
   const indexResponse = await fetch(`${language}/index.json?v=${dataVersion}`);
   if (!indexResponse.ok) throw new Error(`Unable to load ${language} songs index: ${indexResponse.status}`);
 
@@ -35,19 +35,19 @@ async function loadSongs() {
   document.documentElement.lang = indexData.lang;
   document.title = indexData.pageTitle;
 
-  songsPage.classList.add('rhyme-editorial-page', 'telugu-text');
+  songsPage.classList.add('rhyme-editorial-page', `${language}-text`);
 
   const intro = createSongElement('header', 'rhyme-intro', '');
-  const kicker = createSongElement('p', 'rhyme-kicker', 'Melodies for little Klintara');
+  const kicker = createSongElement('p', 'rhyme-kicker', indexData.kicker);
   const introGrid = createSongElement('div', 'rhyme-intro-grid', '');
   const introMeta = createSongElement('div', 'rhyme-intro-meta', '');
   introMeta.append(createSongElement('span', 'rhyme-intro-index', `${String(songs.length).padStart(2, '0')} Songs`));
   const introTitle = createSongElement('h1', 'rhyme-intro-title', '');
-  introTitle.append(document.createTextNode('Telugu songs for little'), createSongElement('em', '', 'Klintara'));
+  introTitle.append(document.createTextNode(`${indexData.languageName} songs for little`), createSongElement('em', '', 'Klintara'));
   introGrid.append(
     introMeta,
     introTitle,
-    createSongElement('p', 'rhyme-intro-copy', 'A warm collection of Telugu melodies to sing, sway, and share with little Klintara.')
+    createSongElement('p', 'rhyme-intro-copy', indexData.description)
   );
   intro.append(kicker, introGrid);
 
