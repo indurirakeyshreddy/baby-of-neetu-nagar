@@ -10,6 +10,7 @@ const revealButton = document.getElementById('revealButton');
 const audioToggleBtn = document.getElementById('audioToggleBtn');
 const revealAudio = document.getElementById('revealAudio');
 const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
+const navSubmenuLinks = Array.from(document.querySelectorAll('.nav-submenu-link'));
 const rhymeMenu = document.querySelector('.nav-menu-item-rhymes');
 const rhymeMenuTrigger = rhymeMenu?.querySelector('.nav-menu-trigger');
 const birthDateInput = document.getElementById('birthDateInput');
@@ -135,6 +136,7 @@ function getCurrentPageName() {
     'telugu-rhymes.html': 'rhymes',
     'hindi-rhymes.html': 'hindi-rhymes',
     'sanskrit-rhymes.html': 'sanskrit-rhymes',
+    'scripts.html': 'scripts',
     'nameplate.html': 'nameplate',
     'telugurhymes.html': 'telugu-rhymes',
     'hindirhymes.html': 'hindi-rhymes',
@@ -150,9 +152,19 @@ function getCurrentPageName() {
 
 function updateActiveNav() {
   const currentSection = getCurrentPageName();
+  const rhymeSections = ['rhymes', 'hindi-rhymes', 'sanskrit-rhymes'];
 
   navButtons.forEach((button) => {
-    button.classList.toggle('active', button.dataset.target === currentSection);
+    const isRhymesTrigger = button.classList.contains('nav-menu-trigger');
+    const isActive = isRhymesTrigger
+      ? rhymeSections.includes(currentSection)
+      : button.dataset.target === currentSection;
+
+    button.classList.toggle('active', isActive);
+  });
+
+  navSubmenuLinks.forEach((link) => {
+    link.classList.toggle('active', link.dataset.target === currentSection);
   });
 }
 

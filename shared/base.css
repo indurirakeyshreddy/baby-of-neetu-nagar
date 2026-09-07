@@ -361,6 +361,10 @@ body::after {
   outline: none;
 }
 
+.nav-submenu-link.active {
+  color: var(--accent);
+}
+
 .nav-btn {
   border: 1px solid transparent;
   border-radius: 999px;
@@ -392,6 +396,10 @@ body::after {
 }
 
 .nav-btn.active {
+  color: var(--accent);
+}
+
+.nav-menu-trigger.active {
   color: var(--accent);
 }
 
