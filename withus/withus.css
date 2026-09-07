@@ -259,6 +259,9 @@
 
 .withus-title-block h2 em {
   color: #f7f1e5;
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
   font-size: 0.78em;
 }
 
