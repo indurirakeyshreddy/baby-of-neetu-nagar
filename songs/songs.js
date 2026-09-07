@@ -33,7 +33,7 @@ function addSongAudioControl(feature, song, language) {
   audio.src = `${language}/audio/${song.id}.mp3`;
   audio.setAttribute('aria-hidden', 'true');
 
-  const button = createSongElement('button', 'songs-audio-control', '🔊');
+  const button = createSongElement('button', 'songs-audio-control', '🔈');
   button.type = 'button';
   button.setAttribute('aria-label', `Play ${song.title}`);
   button.title = `Play ${song.title}`;
