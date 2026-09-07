@@ -429,7 +429,7 @@ function completeReveal() {
   // Update internal state and show content
   stepIndex = nameLetters.length;
   if (choicePrompt) {
-    choicePrompt.textContent = 'Lovely — That\'s incredibly unique!';
+    choicePrompt.textContent = 'An Attractive Guiding Star..!';
   }
   if (revealButton) {
     revealButton.style.display = 'none';
@@ -618,7 +618,7 @@ updateNameDisplay();
 
 if (isComplete) {
   if (choicePrompt) {
-    choicePrompt.textContent = 'Lovely — That\'s incredibly unique!';
+    choicePrompt.textContent = 'An Attractive Guiding Star..!';
   }
   if (revealButton) {
     revealButton.style.display = 'none';
