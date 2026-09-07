@@ -11,8 +11,7 @@ const audioToggleBtn = document.getElementById('audioToggleBtn');
 const revealAudio = document.getElementById('revealAudio');
 const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
 const navSubmenuLinks = Array.from(document.querySelectorAll('.nav-submenu-link'));
-const rhymeMenu = document.querySelector('.nav-menu-item-rhymes');
-const rhymeMenuTrigger = rhymeMenu?.querySelector('.nav-menu-trigger');
+const navMenus = Array.from(document.querySelectorAll('.nav-menu-item'));
 const birthDateInput = document.getElementById('birthDateInput');
 const calculateBirthdayBtn = document.getElementById('calculateBirthdayBtn');
 const birthdayResult = document.getElementById('birthdayResult');
@@ -137,6 +136,9 @@ function getCurrentPageName() {
     'hindi-rhymes.html': 'hindi-rhymes',
     'sanskrit-rhymes.html': 'sanskrit-rhymes',
     'scripts.html': 'scripts',
+    'telugu-songs.html': 'telugu-songs',
+    'hindi-songs.html': 'hindi-songs',
+    'tamil-songs.html': 'tamil-songs',
     'nameplate.html': 'nameplate',
     'telugurhymes.html': 'telugu-rhymes',
     'hindirhymes.html': 'hindi-rhymes',
@@ -153,11 +155,15 @@ function getCurrentPageName() {
 function updateActiveNav() {
   const currentSection = getCurrentPageName();
   const rhymeSections = ['rhymes', 'hindi-rhymes', 'sanskrit-rhymes'];
+  const songSections = ['telugu-songs', 'hindi-songs', 'tamil-songs'];
 
   navButtons.forEach((button) => {
-    const isRhymesTrigger = button.classList.contains('nav-menu-trigger');
-    const isActive = isRhymesTrigger
-      ? rhymeSections.includes(currentSection)
+    const menuItem = button.closest('.nav-menu-item');
+    const menuName = menuItem?.dataset.menu;
+    const isMenuTrigger = button.classList.contains('nav-menu-trigger');
+    const isActive = isMenuTrigger
+      ? (menuName === 'rhymes' && rhymeSections.includes(currentSection))
+        || (menuName === 'songs' && songSections.includes(currentSection))
       : button.dataset.target === currentSection;
 
     button.classList.toggle('active', isActive);
@@ -203,19 +209,22 @@ function bindNavigation() {
     });
   });
 
-  if (rhymeMenu && rhymeMenuTrigger) {
-    rhymeMenuTrigger.addEventListener('click', () => {
-      const isOpen = rhymeMenu.classList.toggle('is-open');
-      rhymeMenuTrigger.setAttribute('aria-expanded', String(isOpen));
+  navMenus.forEach((menu) => {
+    const trigger = menu.querySelector('.nav-menu-trigger');
+    if (!trigger) return;
+
+    trigger.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', String(isOpen));
     });
 
     document.addEventListener('click', (event) => {
-      if (!rhymeMenu.contains(event.target)) {
-        rhymeMenu.classList.remove('is-open');
-        rhymeMenuTrigger.setAttribute('aria-expanded', 'false');
+      if (!menu.contains(event.target)) {
+        menu.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
       }
     });
-  }
+  });
 }
 
 function getDistinctRhymeWords() {
