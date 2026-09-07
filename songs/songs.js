@@ -87,12 +87,16 @@ async function loadSongs() {
   songsPage.classList.add('rhyme-editorial-page', `${language}-text`);
 
   const intro = createSongElement('header', 'rhyme-intro', '');
-  const kicker = createSongElement('p', 'rhyme-kicker', indexData.kicker);
+  const kicker = createSongElement('p', 'rhyme-kicker', '');
+  kicker.append(
+    document.createTextNode('A little library of '),
+    createSongElement('span', 'rhyme-language-mark', `${indexData.languageName} Light`)
+  );
   const introGrid = createSongElement('div', 'rhyme-intro-grid', '');
   const introMeta = createSongElement('div', 'rhyme-intro-meta', '');
   introMeta.append(createSongElement('span', 'rhyme-intro-index', `${String(songs.length).padStart(2, '0')} Songs`));
   const introTitle = createSongElement('h1', 'rhyme-intro-title', '');
-  const introTitleLead = createSongElement('span', 'songs-intro-title-lead', `${indexData.languageName} songs for little`);
+  const introTitleLead = createSongElement('span', 'songs-intro-title-lead', `${language === 'telugu' || language === 'tamil' ? '' : `${indexData.languageName} `}Songs for little`);
   introTitle.append(introTitleLead, createSongElement('em', '', 'Klintara'));
   introGrid.append(
     introMeta,
