@@ -1,10 +1,57 @@
 const rhymePage = document.querySelector('[data-rhyme-language]');
+let activeRhymeAudio = null;
 
 function createRhymeElement(tagName, className, textContent) {
   const element = document.createElement(tagName);
   element.className = className;
   if (textContent) element.textContent = textContent;
   return element;
+}
+
+function addRhymeAudioControl(card, rhyme, language) {
+  if (language !== 'telugu') return;
+
+  const audio = document.createElement('audio');
+  audio.className = 'rhyme-audio';
+  audio.preload = 'none';
+  audio.src = `${language}/audio/${rhyme.id}.mp3`;
+  audio.setAttribute('aria-hidden', 'true');
+
+  const button = createRhymeElement('button', 'rhyme-audio-control', '🔈');
+  button.type = 'button';
+  button.setAttribute('aria-label', `Play ${rhyme.title}`);
+  button.title = `Play ${rhyme.title}`;
+
+  const updateButton = () => {
+    const isPlaying = !audio.paused;
+    button.textContent = isPlaying ? '🔊' : '🔈';
+    button.setAttribute('aria-label', `${isPlaying ? 'Pause' : 'Play'} ${rhyme.title}`);
+    button.title = `${isPlaying ? 'Pause' : 'Play'} ${rhyme.title}`;
+    button.classList.toggle('is-playing', isPlaying);
+  };
+
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!audio.paused) {
+      audio.pause();
+      return;
+    }
+
+    if (activeRhymeAudio && activeRhymeAudio !== audio) activeRhymeAudio.pause();
+    activeRhymeAudio = audio;
+    audio.play().catch(() => updateButton());
+  });
+
+  audio.addEventListener('play', updateButton);
+  audio.addEventListener('pause', updateButton);
+  audio.addEventListener('ended', () => {
+    activeRhymeAudio = null;
+    updateButton();
+  });
+
+  card.append(button, audio);
 }
 
 function buildEditorialPage(pageData, language) {
@@ -86,6 +133,7 @@ function buildEditorialPage(pageData, language) {
     );
 
     feature.append(identity, titleBlock, lyrics);
+    addRhymeAudioControl(feature, rhyme, language);
     section.append(createRhymeElement('div', 'rhyme-grid-rule'), feature);
     rhymePage.append(section);
   });

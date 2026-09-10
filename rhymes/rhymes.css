@@ -344,6 +344,41 @@
   color: #30334a;
 }
 
+.rhyme-audio {
+  display: none;
+}
+
+.rhyme-audio-control {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 1;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #f7f1e5;
+  background: rgba(13, 17, 32, 0.72);
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.rhyme-audio-control:hover,
+.rhyme-audio-control:focus-visible,
+.rhyme-audio-control.is-playing {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+  outline: none;
+}
+
 .rhyme-entry {
   position: relative;
   border-top: 1px solid rgba(255, 255, 255, 0.18);
@@ -364,6 +399,7 @@
 }
 
 .rhyme-feature {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(170px, 0.8fr) minmax(0, 1.35fr) minmax(220px, 1fr);
   gap: clamp(26px, 5vw, 84px);
