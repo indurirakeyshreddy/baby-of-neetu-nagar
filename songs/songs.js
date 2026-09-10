@@ -4,8 +4,14 @@ const availableAudioSongs = new Set([
   'aura-ammaka-chella',
   'vidhatha-talapuna',
   'orey-aanjaneyulu',
-  'vaa-rayil-vida'
+  'vaa-rayil-vida',
+  'lali-lali',
+  'chu-manthar-kaali',
+  'krishnam-vande-jagadgurum'
 ]);
+const audioFileNames = {
+  'krishnam-vande-jagadgurum': 'Krishnam-Vande-Jagadgurum.mp3'
+};
 let activeSongAudio = null;
 
 function updateSongsScrollButton() {
@@ -31,7 +37,7 @@ function addSongAudioControl(feature, song, language) {
   const audio = document.createElement('audio');
   audio.className = 'songs-audio';
   audio.preload = 'none';
-  audio.src = `${language}/audio/${song.id}.mp3`;
+  audio.src = `${language}/audio/${audioFileNames[song.id] || `${song.id}.mp3`}`;
   audio.setAttribute('aria-hidden', 'true');
 
   const button = createSongElement('button', 'songs-audio-control', '🔈');
