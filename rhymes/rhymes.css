@@ -279,7 +279,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   margin-top: 22px;
-  background: rgba(255, 255, 255, 0.18);
+  background: transparent;
 }
 
 .rhyme-directory-card {

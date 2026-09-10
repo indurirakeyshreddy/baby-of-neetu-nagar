@@ -97,7 +97,7 @@ body {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
   margin-top: 22px;
-  background: var(--scripts-line);
+  background: transparent;
 }
 
 .script-card {
