@@ -3,7 +3,8 @@ const songsScrollTop = document.getElementById('songsScrollTop');
 const availableAudioSongs = new Set([
   'aura-ammaka-chella',
   'vidhatha-talapuna',
-  'orey-aanjaneyulu'
+  'orey-aanjaneyulu',
+  'vaa-rayil-vida'
 ]);
 let activeSongAudio = null;
 
@@ -25,7 +26,7 @@ function createSongElement(tagName, className, textContent) {
 }
 
 function addSongAudioControl(feature, song, language) {
-  if (language !== 'telugu' || !availableAudioSongs.has(song.id)) return;
+  if (!['telugu', 'tamil'].includes(language) || !availableAudioSongs.has(song.id)) return;
 
   const audio = document.createElement('audio');
   audio.className = 'songs-audio';
