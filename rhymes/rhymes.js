@@ -143,15 +143,15 @@ async function loadRhymes() {
   if (!rhymePage) return;
 
   const language = rhymePage.dataset.rhymeLanguage;
-  const indexResponse = await fetch(`${language}/index.json`);
-  if (!indexResponse.ok) throw new Error(`Unable to load ${language}/index.json: ${indexResponse.status}`);
+  const indexResponse = await fetch(`${language}/index.yaml`);
+  if (!indexResponse.ok) throw new Error(`Unable to load ${language}/index.yaml: ${indexResponse.status}`);
 
-  const pageData = await indexResponse.json();
+  const pageData = parseSimpleYaml(await indexResponse.text());
   const rhymeResponses = await Promise.all(pageData.rhymes.map((fileName) => fetch(`${language}/${fileName}`)));
   const failedResponse = rhymeResponses.find((response) => !response.ok);
   if (failedResponse) throw new Error(`Unable to load a ${language} rhyme: ${failedResponse.status}`);
 
-  pageData.rhymes = await Promise.all(rhymeResponses.map((response) => response.json()));
+  pageData.rhymes = await Promise.all(rhymeResponses.map(async (response) => parseSimpleYaml(await response.text())));
 
   document.documentElement.lang = pageData.lang;
   document.title = pageData.pageTitle;

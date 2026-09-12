@@ -1,0 +1,12 @@
+pageTitle: "Telugu Rhymes | BABY-OF-NEETU-NAGAR"
+pageDescription: "A rhymes hub with easy navigation across Telugu, Hindi, and Sanskrit verses."
+lang: "te"
+className: "telugu-text"
+rhymes:
+  - "udata-udata-ooch.yaml"
+  - "chima-ento-chinnadi.yaml"
+  - "chuka-railu.yaml"
+  - "chandamama.yaml"
+  - "chitti-chilakamma.yaml"
+  - "dagudumuthalu.yaml"
+  - "koti-bavaku-pellanta.yaml"

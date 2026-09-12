@@ -1,0 +1,12 @@
+pageTitle: "Hindi Rhymes | BABY-OF-NEETU-NAGAR"
+pageDescription: "A dedicated page for sweet Hindi rhymes and verses."
+lang: "hi"
+className: "hindi-text"
+rhymes:
+  - "chandamama.yaml"
+  - "ek-mota-hathi.yaml"
+  - "aha-tamatar.yaml"
+  - "lallaa-lallaa-lory.yaml"
+  - "nani-teri-morni.yaml"
+  - "upar-pankha-chalta-hai.yaml"
+  - "machhli-jal-ki-rani-hai.yaml"

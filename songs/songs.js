@@ -79,15 +79,15 @@ async function loadSongs() {
 
   const language = songsPage.dataset.songLanguage;
   const dataVersion = '20260907-6';
-  const indexResponse = await fetch(`${language}/index.json?v=${dataVersion}`);
+  const indexResponse = await fetch(`${language}/index.yaml?v=${dataVersion}`);
   if (!indexResponse.ok) throw new Error(`Unable to load ${language} songs index: ${indexResponse.status}`);
 
-  const indexData = await indexResponse.json();
+  const indexData = parseSimpleYaml(await indexResponse.text());
   const songResponses = await Promise.all(indexData.songs.map((fileName) => fetch(`${language}/${fileName}?v=${dataVersion}`)));
   const failedResponse = songResponses.find((response) => !response.ok);
   if (failedResponse) throw new Error(`Unable to load a ${language} song: ${failedResponse.status}`);
 
-  const songs = await Promise.all(songResponses.map((response) => response.json()));
+  const songs = await Promise.all(songResponses.map(async (response) => parseSimpleYaml(await response.text())));
   document.documentElement.lang = indexData.lang;
   document.title = indexData.pageTitle;
 

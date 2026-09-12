@@ -1,0 +1,13 @@
+lang: "te"
+languageName: "Telugu"
+pageTitle: "Telugu Songs | BABY-OF-NEETU-NAGAR"
+kicker: "A little library of Telugu Light"
+description: "A warm collection of Telugu melodies to sing, sway, and share."
+songs:
+  - "aura-ammaka-chella.yaml"
+  - "vidhatha-talapuna.yaml"
+  - "orey-aanjaneyulu.yaml"
+  - "jili-bili-palukulu.yaml"
+  - "lali-lali.yaml"
+  - "chu-manthar-kaali.yaml"
+  - "krishnam-vande-jagadgurum.yaml"
