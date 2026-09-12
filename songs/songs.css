@@ -102,6 +102,17 @@
   font-weight: 500;
 }
 
+.featured-song-lines {
+  display: inline-block;
+  margin: 0.9em 0;
+  padding: 0.75em 1em;
+  border-left: 3px solid #f5c779;
+  color: #fffaf0;
+  background: linear-gradient(90deg, rgba(245, 199, 121, 0.18), rgba(245, 199, 121, 0.03));
+  font-weight: 700;
+  text-shadow: 0 0 18px rgba(245, 199, 121, 0.22);
+}
+
 .songs-shell .rhyme-intro-title {
   white-space: normal;
   font-size: clamp(1rem, 5.5vw, 4.8rem);

@@ -31,6 +31,31 @@ function createSongElement(tagName, className, textContent) {
   return element;
 }
 
+function createSongLyrics(song) {
+  const lyrics = createSongElement('p', '', '');
+  const featuredLines = [
+    'నరుడిలోపల పరుడిపై దృష్టి పరుపగా',
+    'తలవంచి కైమోడ్చి శిష్యుడవు నీవైతె',
+    'నీ ఆర్తి కడదేర్చు ఆచార్యుడవు నీవే'
+  ];
+  const lines = song.text.split('\n');
+  const featuredStart = song.id === 'krishnam-vande-jagadgurum'
+    ? lines.findIndex((line, index) => featuredLines.every((featuredLine, offset) => lines[index + offset]?.trim() === featuredLine))
+    : -1;
+
+  if (featuredStart < 0) {
+    lyrics.textContent = song.text;
+    return lyrics;
+  }
+
+  lyrics.append(
+    document.createTextNode(`${lines.slice(0, featuredStart).join('\n')}\n`),
+    createSongElement('span', 'featured-song-lines', featuredLines.join('\n')),
+    document.createTextNode(`\n${lines.slice(featuredStart + featuredLines.length).join('\n')}`)
+  );
+  return lyrics;
+}
+
 function addSongAudioControl(feature, song, language) {
   if (!['telugu', 'tamil'].includes(language) || !availableAudioSongs.has(song.id)) return;
 
@@ -139,7 +164,7 @@ async function loadSongs() {
     const titleBlock = createSongElement('div', 'rhyme-title-block', '');
     titleBlock.append(createSongElement('h2', '', song.title));
     const lyrics = createSongElement('div', 'rhyme-lyrics', '');
-    lyrics.append(createSongElement('p', '', song.text));
+    lyrics.append(createSongLyrics(song));
     feature.append(identity, titleBlock, lyrics);
     addSongAudioControl(feature, song, language);
     entry.append(createSongElement('div', 'rhyme-grid-rule', ''), feature);
