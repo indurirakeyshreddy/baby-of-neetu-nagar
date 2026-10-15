@@ -1,4 +1,4 @@
-const CACHE_NAME = 'klintara-offline-v6';
+const CACHE_NAME = 'klintara-offline-v7';
 const APP_SHELL = [
   './',
   './index.html',
@@ -52,6 +52,10 @@ const APP_SHELL = [
   './withus/with-us.js',
   './events/events.html',
   './events/events.css',
+  './wallpost/wallpost.html',
+  './wallpost/wallpost.css',
+  './wallpost/wallpost.js',
+  './wallpost/posts/index.yaml',
   './script.js',
   './shared/base.css',
   './shared/components.css',
@@ -96,6 +100,19 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  if (requestUrl.pathname.includes('/wallpost/')) {
+    event.respondWith(
+      fetch(event.request).then((response) => {
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        }
+        return response;
+      }).catch(() => caches.match(event.request))
     );
     return;
   }

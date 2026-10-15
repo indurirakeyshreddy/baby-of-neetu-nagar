@@ -145,6 +145,7 @@ function getCurrentPageName() {
     'sanskrithymes.html': 'sanskrit-rhymes',
     'birthday.html': 'birthday',
     'events.html': 'events',
+    'wallpost.html': 'wallpost',
     'with-us.html': 'with-us',
     'with-us': 'with-us'
   };
@@ -181,7 +182,7 @@ function updateWithUsButtonState() {
   const isHomePage = window.location.pathname.split('/').pop() === 'index.html' || window.location.pathname === '/';
   const shouldLock = isHomePage && !isComplete;
   const currentPath = window.location.pathname;
-  const isInSubfolder = currentPath.includes('/rhymes/') || currentPath.includes('/scripts/') || currentPath.includes('/events/') || currentPath.includes('/withus/');
+  const isInSubfolder = currentPath.includes('/rhymes/') || currentPath.includes('/scripts/') || currentPath.includes('/events/') || currentPath.includes('/wallpost/') || currentPath.includes('/withus/');
   const withUsHref = isInSubfolder ? '../withus/with-us.html' : 'withus/with-us.html';
 
   withUsButton.classList.toggle('locked', shouldLock);
@@ -618,6 +619,23 @@ function resetPagePosition() {
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 }
 
+function addWallpostNavigation() {
+  const nav = document.querySelector('.top-nav');
+  const eventsLink = nav?.querySelector('[data-target="events"]');
+  if (!nav || !eventsLink || nav.querySelector('[data-target="wallpost"]')) return;
+
+  const scriptElement = document.querySelector('script[src*="script.js"]');
+  if (!scriptElement) return;
+
+  const link = document.createElement('a');
+  link.className = 'nav-btn';
+  link.href = new URL('wallpost/wallpost.html', scriptElement.src).pathname;
+  link.dataset.target = 'wallpost';
+  link.textContent = 'Wallpost';
+  eventsLink.after(link);
+  navButtons.push(link);
+}
+
 resetPagePosition();
 createSparkles();
 buildFullNameReveal();
@@ -688,6 +706,7 @@ if (!isTouchDevice && !prefersReducedMotion) {
     }
   });
 }
+addWallpostNavigation();
 addTouchFeedback();
 updateActiveNav();
 updateWithUsButtonState();
