@@ -12,17 +12,12 @@
 }
 
 .home-page .aurora,
-.home-page .orbital-ring,
-.home-page .sparkle {
+.home-page .orbital-ring {
   animation: none;
 }
 
 .home-page .orbital-ring {
   opacity: 0.18;
-}
-
-.home-page .sparkle {
-  opacity: 0.28;
 }
 
 .home-page-actions {
