@@ -40,7 +40,6 @@ async function loadWallposts() {
 
     const copy = createWallpostElement('div', 'wallpost-copy-block');
     copy.append(
-      createWallpostElement('p', 'wallpost-number', `Wallpost ${String(index + 1).padStart(2, '0')}`),
       createWallpostElement('h2', 'wallpost-title', post.title),
       createWallpostElement('p', 'wallpost-text', post.text)
     );
